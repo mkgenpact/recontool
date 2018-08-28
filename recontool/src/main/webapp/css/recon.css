@@ -1,0 +1,19 @@
+@charset "ISO-8859-1";
+
+body {
+  font-family: Courier New;
+}
+.page-header{
+	background-color: #e9bb43;
+	height :40px;
+	margin: 1px;
+	color: white;
+}
+
+.container{
+	background-color: #bbc9a5;
+}
+
+.jumbotron {
+	background-color: #a7c6eb;
+}
