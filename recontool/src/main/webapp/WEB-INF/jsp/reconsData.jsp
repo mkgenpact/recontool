@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false" %>
 <div class="panel panel-success" style="background-color: #a7c6eb">
 <div class="panel-heading" style="background-color: #e9bb43">Recons</div>
   <div class="panel-body">
+  <p>${message}</p>
   <table class="table table-bordered" id="reconTableId">
     <thead>
       <tr>
@@ -12,7 +15,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+   	 	<c:forEach items="${recons}" var="recon">
+   	 	 <tr>
+   	 	 	<td>
+            <c:out value="${recon.reconFileName}"></c:out>
+            </td>
+            <td>
+            <c:out value="${recon.recievedDate}"></c:out>
+            </td>
+            <td>
+            <c:out value="${recon.source}"></c:out>
+            </td>
+           </tr>
+        </c:forEach>
+     <!--  <tr>
         <td>xyz</td>
         <td>23/07/2018</td>
         <td>ABC</td>
@@ -26,7 +42,7 @@
          <td>mef</td>
         <td>23/07/2018</td>
         <td>ABC</td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
   </div>
