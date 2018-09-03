@@ -2,8 +2,9 @@ CREATE DATABASE IF NOT EXISTS ReconTool;
  CREATE TABLE IF NOT EXISTS ReconFiles (
 	id int(10) NOT NULL auto_increment,
 	name varchar(45),
-	filepath varchar(45),
 	description varchar(255),
+	runschedule varchar(100),
+	information varchar(255),
 	PRIMARY KEY( id )
 );
  CREATE TABLE IF NOT EXISTS FileRowData (
