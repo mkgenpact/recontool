@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS ReconTool;
+USE ReconTool;
  CREATE TABLE IF NOT EXISTS ReconFiles (
 	id int(10) NOT NULL auto_increment,
 	name varchar(45),
@@ -9,8 +10,8 @@ CREATE DATABASE IF NOT EXISTS ReconTool;
 );
  CREATE TABLE IF NOT EXISTS FileRowData (
 	id int(10) NOT NULL auto_increment,
-	reconfiles_id numeric(9,2),
-	jsonrowdata blob,
+	reconfiles_id int(10),
+	jsonrowdata varchar(500),
 	action varchar(45),
 	PRIMARY KEY( id ),
 	FOREIGN KEY (reconfiles_id) REFERENCES ReconFiles(id)
