@@ -1,36 +1,51 @@
 package com.recon.model;
 
-public class ReconModel {
+public class ReconModel { 
+	
+	private Integer reconId;
+	private String name;
+	private String description;
+	private String runschedule;
+	private String information;
+	
+	public Integer getReconId() {
+		return reconId;
+	}
+	public void setReconId(Integer reconId) {
+		this.reconId = reconId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getRunschedule() {
+		return runschedule;
+	}
+	public void setRunschedule(String runschedule) {
+		this.runschedule = runschedule;
+	}
+	public String getInformation() {
+		return information;
+	}
+	public void setInformation(String information) {
+		this.information = information;
+	}
+	
 
-	private String reconFileName;
-	private String recievedDate;
-	private String source;
-	
-	public String getReconFileName() {
-		return reconFileName;
-	}
-	public void setReconFileName(String reconFileName) {
-		this.reconFileName = reconFileName;
-	}
-	public String getRecievedDate() {
-		return recievedDate;
-	}
-	public void setRecievedDate(String recievedDate) {
-		this.recievedDate = recievedDate;
-	}
-	public String getSource() {
-		return source;
-	}
-	public void setSource(String source) {
-		this.source = source;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((recievedDate == null) ? 0 : recievedDate.hashCode());
-		result = prime * result + ((reconFileName == null) ? 0 : reconFileName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((reconId == null) ? 0 : reconId.hashCode());
 		return result;
 	}
 	@Override
@@ -42,16 +57,17 @@ public class ReconModel {
 		if (getClass() != obj.getClass())
 			return false;
 		ReconModel other = (ReconModel) obj;
-		if (recievedDate == null) {
-			if (other.recievedDate != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!recievedDate.equals(other.recievedDate))
+		} else if (!name.equals(other.name))
 			return false;
-		if (reconFileName == null) {
-			if (other.reconFileName != null)
+		if (reconId == null) {
+			if (other.reconId != null)
 				return false;
-		} else if (!reconFileName.equals(other.reconFileName))
+		} else if (!reconId.equals(other.reconId))
 			return false;
 		return true;
 	}
+
 }

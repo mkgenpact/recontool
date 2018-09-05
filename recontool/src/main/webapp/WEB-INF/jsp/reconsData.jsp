@@ -9,22 +9,26 @@
   <table class="table table-bordered" id="reconTableId">
     <thead>
       <tr>
-        <th>ReconName</th>
-        <th>RecievedDate</th>
-        <th>Source</th>
+        <th>Recon Name</th>
+        <th>Description</th>
+        <th>Runschedule</th>
+        <th>Information</th>
       </tr>
     </thead>
     <tbody>
    	 	<c:forEach items="${recons}" var="recon">
    	 	 <tr>
    	 	 	<td>
-            <c:out value="${recon.reconFileName}"></c:out>
+            <c:out value="${recon.name}"></c:out>
             </td>
             <td>
-            <c:out value="${recon.recievedDate}"></c:out>
+            <c:out value="${recon.description}"></c:out>
             </td>
             <td>
-            <c:out value="${recon.source}"></c:out>
+            <c:out value="${recon.runschedule}"></c:out>
+            </td>
+            <td>
+            <c:out value="${recon.information}"></c:out>
             </td>
            </tr>
         </c:forEach>
