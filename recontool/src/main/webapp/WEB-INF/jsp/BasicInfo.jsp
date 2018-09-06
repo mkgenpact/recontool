@@ -31,15 +31,19 @@ th, td {
   </tr>
   <tr>
     <td>Name</td>
-    <td><c:out value="${basic.name}"></c:out></td>
+    <td><c:out value="${recon.name}"></c:out></td>
   </tr>
   <tr>
     <td>Path</td>
-    <td><c:out value="${basic.path}"></c:out></td>
+    <td><c:out value="${recon.information}"></c:out></td>
   </tr>
   <tr>
     <td>RUN Schedule</td>
-    <td><c:out value="${basic.run}"></c:out></td>
+    <td><c:out value="${recon.runschedule}"></c:out></td>
+  </tr>
+  <tr>
+    <td>Description</td>
+    <td><c:out value="${recon.description}"></c:out></td>
   </tr>
 </table>
 

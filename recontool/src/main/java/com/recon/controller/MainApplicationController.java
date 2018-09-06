@@ -36,23 +36,36 @@ public class MainApplicationController {
 	
 	@RequestMapping("/loadBasic")
 	public String loadBasic(HttpServletRequest request,Map<String, Object> model) {
-		String id = request.getParameter("id");
+		//String id = request.getParameter("id");
+		String id = "1";
 		
-		List<ReconModel> recons = reconDao.loadRecons();
-		
-		ReconModel file = recons.get(0);
-		file.setName("Name Of Document");
-		file.setRunschedule("26-June-2018");
-		file.setDescription("Description About");
-		//List<ReconModel> recons = reconDao.loadRecons();
-		model.put("basic", file);
+		ReconModel recon = reconDao.loadBasic(id);
+		model.put("recon", recon);
 		return "BasicInfo";
+	}
+	
+	@RequestMapping("/loadException")
+	public String loadException(HttpServletRequest request,Map<String, Object> model) {
+		//String id = request.getParameter("id");
+		String id = "1";
+		
+		List<String> listOfString = reconDao.loadException(id);
+		
+		System.out.println(listOfString);
+		//model.put("recon", recon);
+		return "Exception";
 	}
 	
 	@RequestMapping("/loadReportDashboard")
 	public String loadReportDashboard(@RequestParam String rpName) {
 		
 		return "dashboradReport";
+	}
+	
+	@RequestMapping("/mainPage")
+	public String mainPage() {
+		
+		return "Main";
 	}
 
 }

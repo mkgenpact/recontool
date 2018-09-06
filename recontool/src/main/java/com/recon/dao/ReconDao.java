@@ -37,4 +37,35 @@ public class ReconDao {
 		
 	}
 
+	public ReconModel loadBasic(String id){
+		
+		List<ReconModel> recons = jdbcTemplate.query("select * from reconfiles where id="+id, new RowMapper<ReconModel>() {
+			@Override
+			public ReconModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+				ReconModel rm = new ReconModel();
+				rm.setReconId(rs.getInt("id"));
+				rm.setName(rs.getString("name"));
+				rm.setDescription(rs.getString("description"));
+				rm.setInformation(rs.getString("information"));
+				rm.setRunschedule(rs.getString("runschedule"));
+				return rm;
+			}
+		});
+		return recons.get(0);
+		
+	}
+	
+	public List<String> loadException(String id){
+		
+		List<String> jsonData = jdbcTemplate.query("select jsonrowdata from filerowdata where reconfiles_id="+id,
+				new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String rm = rs.getString("jsonrowdata");
+				return rm;
+			}
+		});
+		return jsonData;
+		
+	}
 }
