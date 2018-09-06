@@ -37,6 +37,7 @@ CREATE TABLE `breakactions` (
 
 LOCK TABLES `breakactions` WRITE;
 /*!40000 ALTER TABLE `breakactions` DISABLE KEYS */;
+INSERT INTO `breakactions` VALUES (1,'StatusMismatch','ActivateFO','InactivateRD');
 /*!40000 ALTER TABLE `breakactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,10 +80,13 @@ CREATE TABLE `filerowdata` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `reconfiles_id` int(10) DEFAULT NULL,
   `jsonrowdata` varchar(500) DEFAULT NULL,
-  `action` varchar(45) DEFAULT NULL,
+  `breakactions_id` int(10) DEFAULT NULL,
+  `actiontaken` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `reconfiles_id` (`reconfiles_id`),
-  CONSTRAINT `filerowdata_ibfk_1` FOREIGN KEY (`reconfiles_id`) REFERENCES `reconfiles` (`id`)
+  CONSTRAINT `filerowdata_ibfk_1` FOREIGN KEY (`reconfiles_id`) REFERENCES `reconfiles` (`id`),
+  KEY `breakactions_id` (`breakactions_id`),
+  CONSTRAINT `filerowdata_ibfk_2` FOREIGN KEY (`breakactions_id`) REFERENCES `breakactions` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -92,7 +96,7 @@ CREATE TABLE `filerowdata` (
 
 LOCK TABLES `filerowdata` WRITE;
 /*!40000 ALTER TABLE `filerowdata` DISABLE KEYS */;
-INSERT INTO `filerowdata` VALUES (1,1,'[{\"Side\":\"FO\",\"BuySell\":\"Buy\",\"TradeId\":\"12345\",\"Counterparty ID\":\"1234\",\"Counterparty name\":\"ABC DEF\",\"FO Code\":\"VIP\",\"Status\":null,\"Attribute\":null,\"Category\":\"Singleton\",\"Value\":null}]','testaction'),(2,1,'[{\"Side\":\"RD\",\"BuySell\":\"Buy\",\"TradeId\":\"12345\",\"Counterparty ID\":\"1234\",\"Counterparty name\":\"ABC DEF\",\"FO Code\":\"VIP\",\"Status\":\"Active\",\"Attribute\":null,\"Category\":null,\"Value\":null}]','testaction'),(3,1,'[{\"Side\":\"FO\",\"BuySell\":\"Sell\",\"TradeId\":\"76545\",\"Counterparty ID\":\"6586\",\"Counterparty name\":\"MNO LMN\",\"FO Code\":\"DIP\",\"Status\":\"Inactive\",\"Attribute\":null,\"Category\":\"Status Mismatch\",\"Value\":null}]','testaction'),(4,1,'[{\"Side\":\"RD\",\"BuySell\":\"Sell\",\"TradeId\":\"76545\",\"Counterparty ID\":\"6586\",\"Counterparty name\":\"MNO LMN\",\"FO Code\":\"DIP\",\"Status\":\"Active\",\"Attribute\":null,\"Category\":null,\"Value\":null}]','testaction');
+INSERT INTO `filerowdata` VALUES (1,1,'[{\"Side\":\"FO\",\"BuySell\":\"Buy\",\"TradeId\":\"12345\",\"Counterparty ID\":\"1234\",\"Counterparty name\":\"ABC DEF\",\"FO Code\":\"VIP\",\"Status\":null,\"Attribute\":null,\"Category\":\"Singleton\",\"Value\":null}]','testaction'),(2,1,'[{\"Side\":\"RD\",\"BuySell\":\"Buy\",\"TradeId\":\"12345\",\"Counterparty ID\":\"1234\",\"Counterparty name\":\"ABC DEF\",\"FO Code\":\"VIP\",\"Status\":\"Active\",\"Attribute\":null,\"Category\":null,\"Value\":null}]','testaction'),(3,1,'[{\"Side\":\"FO\",\"BuySell\":\"Sell\",\"TradeId\":\"76545\",\"Counterparty ID\":\"6586\",\"Counterparty name\":\"MNO LMN\",\"FO Code\":\"DIP\",\"Status\":\"Inactive\",\"Attribute\":null,\"Category\":\"Status Mismatch\",\"Value\":null}]','testaction'),(4,1,'[{\"Side\":\"RD\",\"BuySell\":\"Sell\",\"TradeId\":\"76545\",\"Counterparty ID\":\"6586\",\"Counterparty name\":\"MNO LMN\",\"FO Code\":\"DIP\",\"Status\":\"Active\",\"Attribute\":null,\"Category\":null,\"Value\":null}]',1,'testaction');
 /*!40000 ALTER TABLE `filerowdata` ENABLE KEYS */;
 UNLOCK TABLES;
 --
