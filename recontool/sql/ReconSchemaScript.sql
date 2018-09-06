@@ -8,13 +8,22 @@ USE ReconTool;
 	information varchar(255),
 	PRIMARY KEY( id )
 );
- CREATE TABLE IF NOT EXISTS FileRowData (
+ CREATE TABLE IF NOT EXISTS BreakActions (
+	id int(10) NOT NULL auto_increment,
+	name varchar(100),
+	action1 varchar(100),
+	action2 varchar(100),
+	PRIMARY KEY( id )
+);
+CREATE TABLE IF NOT EXISTS FileRowData (
 	id int(10) NOT NULL auto_increment,
 	reconfiles_id int(10),
 	jsonrowdata varchar(500),
+	breakactions_id int(10),
 	action varchar(45),
 	PRIMARY KEY( id ),
-	FOREIGN KEY (reconfiles_id) REFERENCES ReconFiles(id)
+	FOREIGN KEY (reconfiles_id) REFERENCES ReconFiles(id),
+	FOREIGN KEY (breakactions_id) REFERENCES BreakActions(id)
 );
  CREATE TABLE IF NOT EXISTS ReconUsers (
 	id int(10) NOT NULL auto_increment,
@@ -22,12 +31,5 @@ USE ReconTool;
 	password varchar(45),
 	role varchar(45),
 	application varchar(45),
-	PRIMARY KEY( id )
-);
- CREATE TABLE IF NOT EXISTS BreakActions (
-	id int(10) NOT NULL auto_increment,
-	name varchar(100),
-	action1 varchar(100),
-	action2 varchar(100),
 	PRIMARY KEY( id )
 );
