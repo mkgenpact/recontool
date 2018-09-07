@@ -9,6 +9,7 @@
   <table class="table table-bordered" id="reconTableId">
     <thead>
       <tr>
+      	<th>Recon Id</th>
         <th>Recon Name</th>
         <th>Description</th>
         <th>Runschedule</th>
@@ -18,8 +19,9 @@
     <tbody>
    	 	<c:forEach items="${recons}" var="recon">
    	 	 <tr>
+   	 	 	<td><a id="recondId"><c:out value="${recon.reconId}"></c:out></a></td>
    	 	 	<td>
-            <c:out value="${recon.name}"></c:out>
+             <c:out value="${recon.name}"></c:out>
             </td>
             <td>
             <c:out value="${recon.description}"></c:out>
@@ -54,6 +56,15 @@
 <script>
 $(document).ready( function () {
     $('#reconTableId').DataTable();
+    $("#recondId").click(function(){
+		alert('hey');
+		var id ={id : $("#recondId").text()};
+		$.get('/recontool/mainPage',id,function(data,status){
+			$('#breakView').html(data);
+		});
+		//$("#breakView").html("<h1>fgdfg</h1>");
+		//alert($("#recondId").text());
+	});
 } );
 </script>
 

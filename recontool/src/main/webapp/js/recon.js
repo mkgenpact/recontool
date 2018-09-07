@@ -11,6 +11,6 @@ $(function(){
 		$.get(context+'/loadReconReports',filterObj,function(data,status){
 			$('#view').html(data);
 		})
-		
-	})
+});
+	
 });

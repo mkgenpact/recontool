@@ -41,6 +41,8 @@
 	</div>
 	<div id="view" class="content">
 	</div>
+	<div id="breakView" class="content">
+	</div>
 </div>
 
 </body>

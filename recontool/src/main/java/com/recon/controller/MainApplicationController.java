@@ -63,8 +63,8 @@ public class MainApplicationController {
 	}
 	
 	@RequestMapping("/mainPage")
-	public String mainPage() {
-		
+	public String mainPage(HttpServletRequest request,Map<String, Object> model) {
+		String fileId = request.getParameter("id");
 		return "Main";
 	}
 
