@@ -33,3 +33,20 @@ CREATE TABLE IF NOT EXISTS FileRowData (
 	application varchar(45),
 	PRIMARY KEY( id )
 );
+CREATE TABLE `recontool`.`fomosystems` (
+  `id` INT NOT NULL,
+  `tradeid` VARCHAR(45) NOT NULL,
+  `counterparty` VARCHAR(100) NULL,
+  `currency` VARCHAR(45) NULL,
+  `amount` VARCHAR(45) NULL,
+  `buyorsell` VARCHAR(45) NULL,
+  `tradedate` VARCHAR(45) NULL,
+  `fees` VARCHAR(45) NULL,
+  `quantity` VARCHAR(45) NULL,
+  `exchange` VARCHAR(45) NULL,
+  `price` VARCHAR(45) NULL,
+  `rate` VARCHAR(45) NULL,
+  `settlementdate` VARCHAR(45) NULL,
+  `systemname` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
