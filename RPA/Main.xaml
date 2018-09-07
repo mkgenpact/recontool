@@ -154,7 +154,7 @@
               <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
             </ActivityAction.Argument>
             <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_9">
-              <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute non query" ExistingDbConnection="[ReconConnection]" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="[&quot;INSERT INTO filerowdata (reconfiles_id,jsonrowdata,action) VALUES (1,'&quot;+row(&quot;jsonrowdata&quot;).ToString+&quot;','testaction')&quot;]">
+              <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute non query" ExistingDbConnection="[ReconConnection]" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="[&quot;INSERT INTO filerowdata (reconfiles_id,jsonrowdata,breakactions_id,action) VALUES (1,'&quot;+row(&quot;jsonrowdata&quot;).ToString+&quot;',1,'testaction')&quot;]">
                 <ui:ExecuteNonQuery.Parameters>
                   <scg:Dictionary x:TypeArguments="x:String, Argument" />
                 </ui:ExecuteNonQuery.Parameters>
