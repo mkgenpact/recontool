@@ -64,7 +64,7 @@
 </div>
 
 <div id="Basic" class="tabcontent">
-        <iframe src="loadBasic" height="300" width="100%">
+        <iframe src='loadBasic?id="${id}"' height="300" width="100%">
         </iframe>
 </div>
 
@@ -74,11 +74,9 @@
 </div>
 
 <div id="Dashboard" class="tabcontent">
-        <iframe src="Dashboard.html" height="400" width="33%">
+        <iframe src="Graph" height="400" width="47%">
             </iframe>
-        <iframe src="Dashboard2.html" height="400" width="33%">
-        </iframe>
-        <iframe src="DashboardTable.html" height="400" width="32%">
+        <iframe src="DashboardTable" height="400" width="47%">
         </iframe>
 </div>
 

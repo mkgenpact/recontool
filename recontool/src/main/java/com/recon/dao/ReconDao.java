@@ -4,11 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.recon.model.JsonModel;
 import com.recon.model.ReconModel;
 
 @Component
@@ -55,14 +58,20 @@ public class ReconDao {
 		
 	}
 	
-	public List<String> loadException(String id){
+	public List<JsonModel> loadException(String id){
 		
-		List<String> jsonData = jdbcTemplate.query("select jsonrowdata from filerowdata where reconfiles_id="+id,
-				new RowMapper<String>() {
+		Gson g = new Gson(); 
+		
+		List<JsonModel> jsonData = jdbcTemplate.query("select jsonrowdata from filerowdata where reconfiles_id="+id,
+				new RowMapper<JsonModel>() {
 			@Override
-			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-				String rm = rs.getString("jsonrowdata");
-				return rm;
+			public JsonModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String jsonString = rs.getString("jsonrowdata");
+				System.out.println(jsonString);
+				JsonModel[] p = null; 
+				p = g.fromJson(jsonString, JsonModel[].class);
+				System.out.println(p);
+				return p[0];
 			}
 		});
 		return jsonData;

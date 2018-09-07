@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +19,8 @@
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
-        <th>LE ID</th>
         <th>Trade ID</th>
+        <th>Counter Party ID</th>
         <th>Exception Category</th>
         <th>Sub Category</th>
         <th>Action</th>
@@ -27,22 +28,16 @@
       </tr>
     </thead>
     <tbody id="myTable">
+    <c:forEach items="${exceptions}" var="exception">
       <tr>
-        <td><c:out value="${exception.counterPartyId}"></c:out></td>
-        <td><c:out value="${exception.tradeId}"></c:out></td>
+        <td><c:out value="${exception.tradeid}"></c:out></td>
+        <td><c:out value="${exception.counterpartyid}"></c:out></td>
         <td><c:out value="${exception.category}"></c:out></td>
-        <td>Inactive in FO <br /> Active in Ref Data</td>
-        <td><a>Update FO</a> <br /> <a>Update ref Data</a></td>
+        <td><c:out value="${exception.subcat1}"></c:out><br /><c:out value="${exception.subcat2}"></c:out></td>
+        <td><a>Action A</a> <br /> <a>Action B</a></td>
         <td>'Y/N' update in ref system</td>
       </tr>
-      <tr>
-            <td>ABC</td>
-            <td>123</td>
-            <td>SM</td>
-            <td>Inactive in FO <br /> Active in Ref Data</td>
-            <td><a>Update FO</a> <br /> <a>Update ref Data</a></td>
-            <td>'Y/N' update in ref system</td>
-          </tr>
+     </c:forEach>
     </tbody>
   </table>
 </div>
