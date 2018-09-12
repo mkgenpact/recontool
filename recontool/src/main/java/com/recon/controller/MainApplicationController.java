@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.recon.dao.ReconDao;
 import com.recon.model.ExceptionResponse;
 import com.recon.model.JsonModel;
+import com.recon.model.Login;
 import com.recon.model.ReconModel;
 
 @Controller
@@ -130,4 +132,22 @@ public class MainApplicationController {
 		model.put("total", total);
 		return "DashboardTable";
 	}
+	
+	
+	@RequestMapping(value = "/login")
+    public String login(Model model, String error, String logout) {
+		if (error != null)
+            model.addAttribute("error", "Your username and password is invalid.");
+        model.addAttribute("login", new Login());
+        return "login";
+    }
+	
+
+	@RequestMapping(value = "/logout")
+    public String logout(HttpServletRequest request,Model model) {
+		request.getSession().invalidate();
+        model.addAttribute("message", "You have been logged out successfully.");
+        model.addAttribute("login", new Login());
+        return "login";
+    }
 }
