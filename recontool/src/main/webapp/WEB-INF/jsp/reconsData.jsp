@@ -57,7 +57,6 @@
 $(document).ready( function () {
     $('#reconTableId').DataTable();
     $("#recondId").click(function(){
-		alert('hey');
 		var id ={id : $("#recondId").text()};
 		$.get('/recontool/mainPage',id,function(data,status){
 			$('#breakView').html(data);
