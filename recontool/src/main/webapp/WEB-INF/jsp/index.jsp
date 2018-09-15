@@ -19,24 +19,21 @@
 	<span style="font-size: 20px">Recon Tool</span>
 	</div>
 	<div class="jumbotron">
-		<form>
+		<!-- <form>
 		  <div class="form-group">
 		    <label for="reconFile">Recon File</label>
-		    <select id="reconFileId">
-		    	<option>File1</option>
-		    	<option>File2</option>
-		    	<option>File2</option>
-		    </select>
+		     <div class="autocomplete" style="width:300px;">
+    			<input id="reconSearchId" type="text" name="reconSearch" placeholder="recons">
+  			</div>
+  			<button type="button" id="submitId" class="btn btn-default">Submit</button>
 		  </div>
-		  <div class="form-group">
-		    <label for="tradeId">Trade Id:</label>
-		    <input type="text" class="form-control" id="tradeId">
- 		  </div>
- 		   <div class="form-group">
-		    <label for="cpId">Counterparty Id:</label>
-		    <input type="text" class="form-control" id="counterPartyId">
- 		  </div>
-		  <button type="button" id="submitId" class="btn btn-default">Submit</button>
+		</form> -->
+		<form>
+		  <label for="reconFile">Recon File</label>
+		  <div class="autocomplete" style="width:300px;">
+		    <input id="reconSearchId" type="text" name="reconSearch" placeholder="type to search recons file">
+		  </div>
+		  <button type="button" id="submitId">Submit</button>
 		</form>
 	</div>
 	<div id="view" class="content">

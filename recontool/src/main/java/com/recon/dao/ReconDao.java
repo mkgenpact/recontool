@@ -39,6 +39,26 @@ public class ReconDao {
 		return recons;
 		
 	}
+	
+public List<ReconModel> loadReconsByName(String fileName){
+		
+		List<ReconModel> recons = jdbcTemplate.query("select * from reconfiles where name='"+fileName+"'", new RowMapper<ReconModel>() {
+
+			@Override
+			public ReconModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+				ReconModel rm = new ReconModel();
+				rm.setReconId(rs.getInt("id"));
+				rm.setName(rs.getString("name"));
+				rm.setDescription(rs.getString("description"));
+				rm.setInformation(rs.getString("information"));
+				rm.setRunschedule(rs.getString("runschedule"));
+				return rm;
+			}
+			
+		});
+		return recons;
+		
+	}
 
 	public ReconModel loadBasic(String id){
 		

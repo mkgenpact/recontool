@@ -21,7 +21,7 @@
    	 	 <tr>
    	 	 	<td><a id="recondId"><c:out value="${recon.reconId}"></c:out></a></td>
    	 	 	<td>
-             <c:out value="${recon.name}"></c:out>
+             <a id="recondName" style="background-color: #feec04;"><u><c:out value="${recon.name}"></c:out></u></a>
             </td>
             <td>
             <c:out value="${recon.description}"></c:out>
@@ -56,13 +56,11 @@
 <script>
 $(document).ready( function () {
     $('#reconTableId').DataTable();
-    $("#recondId").click(function(){
+    $("#recondName").click(function(){
 		var id ={id : $("#recondId").text()};
 		$.get('/recontool/mainPage',id,function(data,status){
 			$('#breakView').html(data);
 		});
-		//$("#breakView").html("<h1>fgdfg</h1>");
-		//alert($("#recondId").text());
 	});
 } );
 </script>

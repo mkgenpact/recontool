@@ -1,7 +1,5 @@
 package com.recon.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.recon.dao.ReconDao;
 import com.recon.model.ExceptionResponse;
@@ -26,15 +25,18 @@ public class MainApplicationController {
 	@Autowired
 	private ReconDao reconDao;
 	
+	
+	@RequestMapping("/loadRecons")
+	@ResponseBody
+	public List<ReconModel> loadRecons(HttpServletRequest request){
+		final List<ReconModel> recons = reconDao.loadRecons();
+		return recons;
+	}
+	
 	@RequestMapping("/loadReconReports")
 	public String loadReconReports(HttpServletRequest request,Map<String, Object> model) {
 		String filename = request.getParameter("fileName");
-		String tradeId = request.getParameter("tradeId");
-		String cpId = request.getParameter("cpId");
-		
-		//TO-DO Load from DB
-		//For now hardcoded
-		List<ReconModel> recons = reconDao.loadRecons();
+		List<ReconModel> recons = reconDao.loadReconsByName(filename);
 		model.put("recons", recons);
 		return "reconsData";
 	}

@@ -15,7 +15,7 @@
 
 <body style="background-color: #ead5ca">
 <div class="container">
-   <div style="width: 350px;height: 350px;border-radius:5px;background-color: #a0a9aa;margin-left: 300px;margin-top: 150px;">
+   <div style="width: 350px;height: 300px;border-radius:5px;background-color: #a0a9aa;margin-left: 300px;margin-top: 150px;">
     <form:form method="POST" modelAttribute="login">
    		 <h2 class="form-heading">Log in</h2>
    		<p><span style="background-color: green;">${message}</span></p>
