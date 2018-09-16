@@ -64,7 +64,7 @@
 </div>
 
 <div id="Basic" class="tabcontent">
-        <iframe src='loadBasic?id="${id}"' height="300" width="100%">
+        <iframe src='loadBasic?id="${id}"' height="500" width="100%">
         </iframe>
 </div>
 
