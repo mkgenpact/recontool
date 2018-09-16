@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.recon.model.BreakAction;
 import com.recon.model.JsonModel;
 import com.recon.model.ReconModel;
 
@@ -40,6 +41,7 @@ public class ReconDao {
 		
 	}
 	
+
 public List<ReconModel> loadReconsByName(String fileName){
 		
 		List<ReconModel> recons = jdbcTemplate.query("select * from reconfiles where name='"+fileName+"'", new RowMapper<ReconModel>() {
@@ -97,4 +99,24 @@ public List<ReconModel> loadReconsByName(String fileName){
 		return jsonData;
 		
 	}
+	
+public List<BreakAction> loadBreakActions(){
+		
+		List<BreakAction> dbData = jdbcTemplate.query("select * from breakactions",
+				new RowMapper<BreakAction>() {
+			@Override
+			public BreakAction mapRow(ResultSet rs, int rowNum) throws SQLException {
+				BreakAction rm = new BreakAction();
+				rm.setId(rs.getInt("id"));
+				rm.setName(rs.getString("name"));
+				rm.setAction1(rs.getString("action1"));
+				rm.setAction2(rs.getString("action2"));
+				return rm;
+			}
+		});
+		return dbData;
+		
+	}
+		
+	
 }
