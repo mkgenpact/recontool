@@ -37,7 +37,7 @@ CREATE TABLE `breakactions` (
 
 LOCK TABLES `breakactions` WRITE;
 /*!40000 ALTER TABLE `breakactions` DISABLE KEYS */;
-INSERT INTO `breakactions` VALUES (1,'StatusMismatch','ActivateFO','InactivateRD');
+INSERT INTO `breakactions` VALUES (1,'Status Mismatch','ActivateFO','InactivateRD');
 /*!40000 ALTER TABLE `breakactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,11 @@ CREATE TABLE `filerowdata` (
 
 LOCK TABLES `filerowdata` WRITE;
 /*!40000 ALTER TABLE `filerowdata` DISABLE KEYS */;
-INSERT INTO `filerowdata` VALUES (1,1,'[{\"Side\":\"FO\",\"BuySell\":\"Buy\",\"TradeId\":\"12345\",\"Counterparty ID\":\"1234\",\"Counterparty name\":\"ABC DEF\",\"FO Code\":\"VIP\",\"Status\":null,\"Attribute\":null,\"Category\":\"Singleton\",\"Value\":null}]',1,'testaction'),(2,1,'[{\"Side\":\"RD\",\"BuySell\":\"Buy\",\"TradeId\":\"12345\",\"Counterparty ID\":\"1234\",\"Counterparty name\":\"ABC DEF\",\"FO Code\":\"VIP\",\"Status\":\"Active\",\"Attribute\":null,\"Category\":null,\"Value\":null}]',1,'testaction'),(3,1,'[{\"Side\":\"FO\",\"BuySell\":\"Sell\",\"TradeId\":\"76545\",\"Counterparty ID\":\"6586\",\"Counterparty name\":\"MNO LMN\",\"FO Code\":\"DIP\",\"Status\":\"Inactive\",\"Attribute\":null,\"Category\":\"Status Mismatch\",\"Value\":null}]',1,'testaction'),(4,1,'[{\"Side\":\"RD\",\"BuySell\":\"Sell\",\"TradeId\":\"76545\",\"Counterparty ID\":\"6586\",\"Counterparty name\":\"MNO LMN\",\"FO Code\":\"DIP\",\"Status\":\"Active\",\"Attribute\":null,\"Category\":null,\"Value\":null}]',1,'testaction');
+INSERT INTO `filerowdata` VALUES
+(1,1,'[{\"side\":\"FO\",\"buysell\":\"Buy\",\"tradeid\":\"12345\",\"counterpartyid\":\"1234\",\"counterpartyname\":\"ABC DEF\",\"focode\":\"VIP\",\"status\":null,\"attribute\":null,\"category\":\"Singleton\",\"value\":null}]',1,'testaction'),
+(2,1,'[{\"side\":\"RD\",\"buysell\":\"Buy\",\"tradeid\":\"12345\",\"counterpartyid\":\"1234\",\"counterpartyname\":\"ABC DEF\",\"focode\":\"VIP\",\"status\":\"Active\",\"attribute\":null,\"category\":null,\"value\":null}]',1,'testaction'),
+(3,1,'[{\"side\":\"FO\",\"buysell\":\"Sell\",\"tradeid\":\"76545\",\"counterpartyid\":\"6586\",\"counterpartyname\":\"MNO LMN\",\"focode\":\"DIP\",\"status\":\"Inactive\",\"attribute\":null,\"category\":\"Status Mismatch\",\"value\":null}]',1,'testaction'),
+(4,1,'[{\"side\":\"RD\",\"buysell\":\"Sell\",\"tradeid\":\"76545\",\"counterpartyid\":\"6586\",\"counterpartyname\":\"MNO LMN\",\"focode\":\"DIP\",\"status\":\"Active\",\"attribute\":null,\"category\":null,\"value\":null}]',1,'testaction');
 /*!40000 ALTER TABLE `filerowdata` ENABLE KEYS */;
 UNLOCK TABLES;
 --
