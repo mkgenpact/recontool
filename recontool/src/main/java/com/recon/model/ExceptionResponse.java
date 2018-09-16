@@ -8,16 +8,32 @@ public class ExceptionResponse {
 		private String tradeid;
 		private String counterpartyid;
 		private String category;
+		private String subcat1;
+		private String subcat2;
+		private String ref1;
+		private String ref2;
+		private String action1;
+		private String action2;
+		
+		
+		public String getAction1() {
+			return action1;
+		}
+		public void setAction1(String action1) {
+			this.action1 = action1;
+		}
+		public String getAction2() {
+			return action2;
+		}
+		public void setAction2(String action2) {
+			this.action2 = action2;
+		}
 		public String getCategory() {
 			return category;
 		}
 		public void setCategory(String category) {
 			this.category = category;
 		}
-		private String subcat1;
-		private String subcat2;
-		private String ref1;
-		private String ref2;
 		public String getTradeid() {
 			return tradeid;
 		}

@@ -45,6 +45,19 @@ th, td {
     <td>Description</td>
     <td><c:out value="${recon.description}"></c:out></td>
   </tr>
+   <tr>
+    <td>Browser file</td>
+    <td>
+    	<form method="POST" action="upload" enctype="multipart/form-data" >
+            File:
+            <input type="file" name="file" id="file" /> <br />
+            Destination:
+            <input type="text" value="C:\\" name="destination"/>
+            <br />
+            <input type="submit" value="Upload" name="upload" id="upload" />
+        </form>
+     </td>
+  </tr>
 </table>
 
 </body>

@@ -34,7 +34,7 @@
         <td><c:out value="${exception.counterpartyid}"></c:out></td>
         <td><c:out value="${exception.category}"></c:out></td>
         <td><c:out value="${exception.subcat1}"></c:out><br /><c:out value="${exception.subcat2}"></c:out></td>
-        <td><a>Action A</a> <br /> <a>Action B</a></td>
+        <td><a><c:out value="${exception.action1}"></c:out></a> <br /> <a>Action B</a></td>
         <td>'Y/N' update in ref system</td>
       </tr>
      </c:forEach>

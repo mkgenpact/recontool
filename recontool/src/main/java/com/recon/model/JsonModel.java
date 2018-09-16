@@ -15,6 +15,22 @@ public class JsonModel {
 		private String attribute;
 		private String category;
 		private String value;
+		private String action1;
+		private String action2;
+		
+		
+		public String getAction1() {
+			return action1;
+		}
+		public void setAction1(String action1) {
+			this.action1 = action1;
+		}
+		public String getAction2() {
+			return action2;
+		}
+		public void setAction2(String action2) {
+			this.action2 = action2;
+		}
 		public String getSide() {
 			return side;
 		}
