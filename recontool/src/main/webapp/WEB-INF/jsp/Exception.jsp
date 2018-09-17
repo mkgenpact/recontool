@@ -34,8 +34,10 @@
         <td><c:out value="${exception.counterpartyid}"></c:out></td>
         <td><c:out value="${exception.category}"></c:out></td>
         <td><c:out value="${exception.subcat1}"></c:out><br /><c:out value="${exception.subcat2}"></c:out></td>
-        <td><a><c:out value="${exception.action1}"></c:out></a> <br /> <a>Action B</a></td>
-        <td>'Y/N' update in ref system</td>
+	       
+        <td><a><c:out value="${exception.action1}"></c:out></a> <br /> <a><c:out value="${exception.action2}"></c:out></a></td>
+        
+        <td>{Comments to be added by UI Path}</td>
       </tr>
      </c:forEach>
     </tbody>

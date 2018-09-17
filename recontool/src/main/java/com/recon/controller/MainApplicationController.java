@@ -75,23 +75,20 @@ public class MainApplicationController {
 		for(JsonModel eachModel: listOfJsonObject) {
 			ExceptionResponse next = new ExceptionResponse();
 			next.setTradeid(eachModel.getTradeid());
+			next.setSide(eachModel.getSide());
 			next.setCounterpartyid(eachModel.getCounterpartyid());
 			next.setCategory(eachModel.getCategory());
 			next.setSubcat1(eachModel.getStatus());
-			for(BreakAction action:  listOfActions) {
-				if(action.getName().equals(eachModel.getCategory())) {
-					next.setAction1(eachModel.getAction1());
-					next.setAction2(eachModel.getAction2());
+			if(eachModel.getCategory() != null) {
+				for(BreakAction actions: listOfActions) {
+					if(actions.getName().equals(eachModel.getCategory())){
+						next.setAction1(actions.getAction1());
+						next.setAction2(actions.getAction2());
+					}
 				}
-			}
-			if(exceptionRes.get(eachModel.getTradeid()) == null) {
-				
-				
 				exceptionRes.put(eachModel.getTradeid(), next);
 			}
-			
 		}
-		System.out.println(exceptionRes.values());
 		
 		model.put("exceptions", exceptionRes.values());
 		return "Exception";

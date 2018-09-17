@@ -89,10 +89,10 @@ public List<ReconModel> loadReconsByName(String fileName){
 			@Override
 			public JsonModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 				String jsonString = rs.getString("jsonrowdata");
-				System.out.println(jsonString);
+				//System.out.println(jsonString);
 				JsonModel[] p = null; 
 				p = g.fromJson(jsonString, JsonModel[].class);
-				System.out.println(p);
+				//System.out.println(p);
 				return p[0];
 			}
 		});

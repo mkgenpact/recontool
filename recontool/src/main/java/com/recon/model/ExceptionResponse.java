@@ -14,8 +14,15 @@ public class ExceptionResponse {
 		private String ref2;
 		private String action1;
 		private String action2;
+		private String side;
 		
 		
+		public String getSide() {
+			return side;
+		}
+		public void setSide(String side) {
+			this.side = side;
+		}
 		public String getAction1() {
 			return action1;
 		}
