@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -228,4 +230,14 @@ public class MainApplicationController {
 	    }
 	    return null;
 	}
+	
+	@RequestMapping("/indexPage")
+	public String IndexPage(HttpServletRequest request,Model model){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	     String name = auth.getName(); //get logged in username
+	      model.addAttribute("username", "Hello "+ name);
+		return "index";
+		
+	}
+	
 }

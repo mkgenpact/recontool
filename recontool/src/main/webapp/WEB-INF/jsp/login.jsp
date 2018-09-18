@@ -9,13 +9,15 @@
 <head>
      <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/recon.css">
   <script src="js/query.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  
 </head>
 
-<body style="background-color: #ead5ca">
+<body style="background-color: rgb(255, 255, 255)">
 <div class="container">
-   <div style="width: 350px;height: 300px;border-radius:5px;background-color: #a0a9aa;margin-left: 300px;margin-top: 150px;">
+   <div class="logindiv">
     <form:form method="POST" modelAttribute="login">
    		 <h2 class="form-heading">Log in</h2>
    		<p><span style="background-color: green;">${message}</span></p>

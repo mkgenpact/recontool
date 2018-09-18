@@ -2,13 +2,35 @@
 
 body {
   font-family: Courier New;
-  background-color: #f4f0bd;
 }
 .page-header{
 	background-color: #808080;
 	height :40px;
 	margin: 1px;
 	color: white;
+	font-size: 20px;
+}
+
+#logout{
+	position : absolute;
+	right :125px;
+	top: 8px;
+	color: white;
+}
+
+#logout a{
+	color: white;
+}
+
+.logindiv{
+	width: 350px;
+	height: 300px;
+	background-color :#e9e9e9;
+	border-radius:5px;
+	border-color:#e9e9e9;
+	border-style: solid;
+	margin-left: 300px;
+	margin-top: 150px;
 }
 
 /* .container{
@@ -17,6 +39,12 @@ body {
 
 .jumbotron {
 	background-color: #a7c6eb;
+}
+
+.greeting {
+	background-color: #e9e9e9;
+	font-size: 15px;
+	font-family: cursive;
 }
 
 .autocomplete {
