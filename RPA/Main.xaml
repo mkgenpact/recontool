@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="Main_1"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="Main_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -74,7 +74,7 @@
       <Sequence.Variables>
         <Variable x:TypeArguments="sd:DataTable" Name="JsonTable" />
       </Sequence.Variables>
-      <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="D:\Genpact\Recon\IntelliMatchReport.xlsx">
+      <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="D:\Genpact\Recon\IntelliMatchReport1.xlsx">
         <ui:ExcelApplicationScope.Body>
           <ActivityAction x:TypeArguments="ui:WorkbookApplication">
             <ActivityAction.Argument>
@@ -86,7 +86,7 @@
               </Sequence.Variables>
               <ui:ExcelReadRow DisplayName="Read Row" sap2010:WorkflowViewState.IdRef="ExcelReadRow_2" Result="[ReconColumns]" SheetName="Sheet1" StartingCell="A1" />
               <ui:BuildDataTable DataTable="[JsonTable]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_3" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;  &lt;TableName /&gt;&#xA;&lt;/NewDataSet&gt;" />
-              <ui:BuildDataTable DataTable="[IntlmtchJsonData]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_4" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;reconfiles_id&quot; type=&quot;xs:int&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;jsonrowdata&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;action&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+              <ui:BuildDataTable DataTable="[IntlmtchJsonData]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_4" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;reconfiles_id&quot; type=&quot;xs:int&quot; /&gt;&#xA;                &lt;xs:element name=&quot;jsonrowdata&quot; type=&quot;xs:string&quot; /&gt;&#xA;                &lt;xs:element name=&quot;action&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
               <ui:ExcelReadRange AddHeaders="True" DataTable="[IntlmtchData]" DisplayName="Read Range" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" SheetName="Sheet1">
                 <ui:ExcelReadRange.Range>
                   <InArgument x:TypeArguments="x:String">
@@ -154,7 +154,7 @@
               <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
             </ActivityAction.Argument>
             <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_9">
-              <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute non query" ExistingDbConnection="[ReconConnection]" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="[&quot;INSERT INTO filerowdata (reconfiles_id,jsonrowdata,breakactions_id,action) VALUES (1,'&quot;+row(&quot;jsonrowdata&quot;).ToString+&quot;',1,'testaction')&quot;]">
+              <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Execute non query" ExistingDbConnection="[ReconConnection]" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="[&quot;INSERT INTO filerowdata (reconfiles_id,jsonrowdata,breakactions_id,actiontaken) VALUES (1,'&quot;+row(&quot;jsonrowdata&quot;).ToString+&quot;',1,'action')&quot;]">
                 <ui:ExecuteNonQuery.Parameters>
                   <scg:Dictionary x:TypeArguments="x:String, Argument" />
                 </ui:ExecuteNonQuery.Parameters>
@@ -164,7 +164,7 @@
         </ui:ForEachRow.Body>
       </ui:ForEachRow>
     </Sequence>
-    <sads:DebugSymbol.Symbol>dyREOlxHZW5wYWN0XFJlY29uXFJlY29uVG9vbFxNYWluLnhhbWw1RAOoAQ4CAQFJBY4BEAIBEY8BBaYBEAIBAk0HjQEiAgESkwEHlQESAgELlgEHpQEXAgEDTaIBTcwBAgFHUw2KARgCAROUAQmUAasCAgEMlgEglgE0AgEJnAENogEYAgEEVw9XpwECAUJYD1jfBwIBP1kPWagLAgE8Wg9gIwIBN2EPbBwCAS5tD22OAQIBK24PiQEfAgEUlAGbAZQBrQECARCUAb8BlAGoAgIBD5QBMJQBQwIBDZ0BD6EBJAIBBVegAVekAQIBRldvV38CAURXigFXkgECAUNYLFg5AgFAWSxZQAIBPVo+Wk4CATpdFV1EAgE5WqUBWq0BAgE4YYIBYZIBAgE1ZxVpIAIBL20sbTkCASxuKG44AgEpdBWGASACARWdAbYBnQHJAQIBB50BggKdAZoDAgEGaBdowQICATB6F3q8AQIBJXsXggEgAgEhgwEXgwHNAQIBHoQBF4QB1AECARmFAReFAZYBAgEWaKIBaLUBAgEzaMABaM0BAgExemJ6bwIBJ3pCelcCASaAAUKAAWoCASR9Q31QAgEigwGsAYMBuwECAR+EAXOEAYcBAgEchAFChAFoAgEahQE0hQFBAgEX</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dyREOlxHZW5wYWN0XFJlY29uXFJlY29uVG9vbFxNYWluLnhhbWw1RAOoAQ4CAQFJBY4BEAIBEY8BBaYBEAIBAk0HjQEiAgESkwEHlQESAgELlgEHpQEXAgEDTaIBTc0BAgFHUw2KARgCAROUAQmUAasCAgEMlgEglgE0AgEJnAENogEYAgEEVw9XpwECAUJYD1jfBwIBP1kPWc4KAgE8Wg9gIwIBN2EPbBwCAS5tD22OAQIBK24PiQEfAgEUlAGbAZQBrQECARCUAb8BlAGoAgIBD5QBMJQBQwIBDZ0BD6EBJAIBBVegAVekAQIBRldvV38CAURXigFXkgECAUNYLFg5AgFAWSxZQAIBPVo+Wk4CATpdFV1EAgE5WqUBWq0BAgE4YYIBYZIBAgE1ZxVpIAIBL20sbTkCASxuKG44AgEpdBWGASACARWdAbYBnQHJAQIBB50BggKdAa0DAgEGaBdowQICATB6F3q8AQIBJXsXggEgAgEhgwEXgwHNAQIBHoQBF4QB1AECARmFAReFAZYBAgEWaKIBaLUBAgEzaMABaM0BAgExemJ6bwIBJ3pCelcCASaAAUKAAWoCASR9Q31QAgEigwGsAYMBuwECAR+EAXOEAYcBAgEchAFChAFoAgEahQE0hQFBAgEX</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -241,7 +241,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="498,2701">
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="498,2741">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
