@@ -236,6 +236,9 @@ public class MainApplicationController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	     String name = auth.getName(); //get logged in username
 	      model.addAttribute("username", "Hello "+ name);
+	      //set the recons
+	      final List<ReconModel> recons = reconDao.loadRecons();
+	      model.addAttribute("recons", recons);
 		return "index";
 		
 	}
