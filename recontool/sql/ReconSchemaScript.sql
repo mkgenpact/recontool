@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS FileRowData (
 	reconfiles_id int(10),
 	jsonrowdata varchar(500),
 	breakactions_id int(10),
-	action varchar(45),
+	actiontaken varchar(45),
 	comment varchar(500),
 	insertdate varchar(50),
 	PRIMARY KEY( id ),
