@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS FileRowData (
 	jsonrowdata varchar(500),
 	breakactions_id int(10),
 	action varchar(45),
+	comment varchar(500),
+	insertdate varchar(50),
 	PRIMARY KEY( id ),
 	FOREIGN KEY (reconfiles_id) REFERENCES ReconFiles(id),
 	FOREIGN KEY (breakactions_id) REFERENCES BreakActions(id)
