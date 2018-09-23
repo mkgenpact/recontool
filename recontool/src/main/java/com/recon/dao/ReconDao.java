@@ -1,18 +1,24 @@
 package com.recon.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.recon.model.BreakAction;
+import com.recon.model.FoMoResponse;
 import com.recon.model.JsonModel;
+import com.recon.model.ReconFile;
 import com.recon.model.ReconModel;
 
 @Component
@@ -117,6 +123,80 @@ public List<BreakAction> loadBreakActions(){
 		return dbData;
 		
 	}
+
+
+public void updateFoMoStatus(List<FoMoResponse> resList){
+	for(FoMoResponse res : resList){
+		Gson g = new Gson(); 
+		List<JsonModel> jsonData = jdbcTemplate.query("select jsonrowdata from filerowdata where id="+Integer.parseInt(res.getId()),
+				new RowMapper<JsonModel>() {
+			@Override
+			public JsonModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String jsonString = rs.getString("jsonrowdata");
+				//System.out.println(jsonString);
+				JsonModel[] p = null; 
+				p = g.fromJson(jsonString, JsonModel[].class);
+				//System.out.println(p);
+				return p[0];
+			}
+		});
+		if(jsonData ==null || jsonData.size() ==0){
+			throw new IllegalArgumentException("Json recod not found for the id = "+res.getId());
+		}
+		JsonModel jsonMode= jsonData.get(0);
+		jsonMode.setComment(res.getMessage());
+		jsonMode.setActiontaken(res.getActiontaken());
+		//update in database
+		JsonModel[] jsoUpArray = {jsonMode} ;
+		String jsonUpdStr = g.toJson(jsoUpArray);
+		System.out.println(jsonUpdStr);
 		
+		jdbcTemplate.update("update filerowdata set jsonrowdata =? where id= ? ", new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setString(1, jsonUpdStr);
+				ps.setInt(2, Integer.parseInt(res.getId()));
+			}
+		});
+	}
+}
+
+public void createFile(ReconModel recModel){
+	jdbcTemplate.update("insert into reconfiles(name,description,runschedule,information) values(?,?,?,?)", new PreparedStatementSetter(){
+		@Override
+		public void setValues(PreparedStatement ps) throws SQLException {
+			ps.setString(1, recModel.getName());
+			ps.setString(2, recModel.getDescription());
+			ps.setString(3, recModel.getRunschedule());
+			ps.setString(4, recModel.getInformation());
+		}
+		
+	});
+}
+
+
+public void populateReconRowData(ReconFile[] recons, int recFileId) {
 	
+	List<BreakAction> breakActions = loadBreakActions();
+	
+	for(ReconFile recon : recons){
+		List<BreakAction> breks =breakActions.stream().filter(action ->(action.getName().equals(recon.getBreakaction()))).
+		collect(Collectors.toList());
+		final String action = (breks!=null && breks.size()>0)?String.valueOf(breks.get(0).getId()):null;
+		jdbcTemplate.update("insert into filerowdata(reconfiles_id,jsonrowdata,breakactions_id) values(?,?,?)", new PreparedStatementSetter(){
+
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, recFileId);
+				ps.setString(2, recon.getJsonrowdata());
+				ps.setString(3, action );
+			}
+			
+		});
+	}
+	
+}
+
+
 }
