@@ -17,6 +17,9 @@ public class JsonModel {
 		private String value;
 		private String action1;
 		private String action2;
+		private String comment;
+		private String actiontaken;
+		private String entereddate;
 		
 		
 		public String getAction1() {
@@ -90,6 +93,24 @@ public class JsonModel {
 		}
 		public void setValue(String value) {
 			this.value = value;
+		}
+		public String getComment() {
+			return comment;
+		}
+		public void setComment(String comment) {
+			this.comment = comment;
+		}
+		public String getActiontaken() {
+			return actiontaken;
+		}
+		public void setActiontaken(String actiontaken) {
+			this.actiontaken = actiontaken;
+		}
+		public String getEntereddate() {
+			return entereddate;
+		}
+		public void setEntereddate(String entereddate) {
+			this.entereddate = entereddate;
 		}
 		
 		
