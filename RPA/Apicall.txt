@@ -1,0 +1,27 @@
+url : http://localhost:8026/recontool/artApi/updateFoMoResponse
+request body :
+[{
+		 "id" : "1",
+		 "actiontaken" : "Activate FO",
+		 "message" : "successfully update in FO"
+		}]
+    
+ url : http://localhost:8026/recontool/artApi/processReconFile
+ request body :
+ 
+ [{
+		"name" : "ABC",
+		"description" : "fileDescription",
+		"runschedule" : "filerunschedule",
+		"information" : "fileinformation",
+		"jsonrowdata" : "[{\"side\":\"FO\",\"buysell\":\"Buy\",\"tradeid\":\"1001\",\"counterpartyid\":\"1234\",\"counterpartyname\":\"ABC DEF\",\"focode\":\"VIP\",\"status\":null,\"attribute\":null,\"category\":\"Singleton\",\"value\":null}]",
+		"breakaction" : "Activate FO Inactivate MO"
+		},
+		{
+		"name" : "fileName",
+		"description" : "fileDescription",
+		"runschedule" : "filerunschedule",
+		"information" : "fileinformation",
+		"jsonrowdata" : "[{\"side\":\"FO\",\"buysell\":\"Buy\",\"tradeid\":\"1000\",\"counterpartyid\":\"1234\",\"counterpartyname\":\"ABC DEF\",\"focode\":\"VIP\",\"status\":null,\"attribute\":null,\"category\":\"Singleton\",\"value\":null}]",
+		"breakaction" : "Activate FO Inactivate MO"
+		}]
