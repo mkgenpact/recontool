@@ -53,33 +53,14 @@
     border-top: none;
 }
 
+#graphDiv {
+	
+}
+
+#tableDiv{
+
+}
 </style>
-</head>
-<body>
-
-<div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'Basic')" id="defaultOpen">Basic Information</button>
-  <button class="tablinks" onclick="openTab(event, 'Exception')">Load Exception Categories</button>
-  <button class="tablinks" onclick="openTab(event, 'Dashboard')">Dashboard</button>
-</div>
-
-<div id="Basic" class="tabcontent">
-        <iframe src='loadBasic?id="${id}"' height="500" width="100%">
-        </iframe>
-</div>
-
-<div id="Exception" class="tabcontent">
-        <iframe src="loadException" height="500" width="100%">
-        </iframe>
-</div>
-
-<div id="Dashboard" class="tabcontent">
-        <iframe src="Graph" height="400" width="47%">
-            </iframe>
-        <iframe src="DashboardTable" height="400" width="47%">
-        </iframe>
-</div>
-
 <script>
 function openTab(evt, cityName) {
     var i, tabcontent, tablinks;
@@ -95,7 +76,80 @@ function openTab(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 // Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+document.getElementById("BasicBut").click();
+</script>
+
+</head>
+<body>
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'BasicDiv')"  id="BasicBut">Basic Information</button>
+  <button class="tablinks" onclick="openTab(event, 'LoadDiv')" id="LoadBut" >Load Exception Categories</button>
+  <button class="tablinks" onclick="openTab(event, 'DashDiv')" id="DashBut">Dashboard</button>
+</div>
+
+<div id="BasicDiv" class="tabcontent">
+       <!--
+            <iframe src='loadBasic?id="${id}"' height="500" width="100%">
+       		</iframe>
+       	 -->
+</div>
+
+<div id="LoadDiv" class="tabcontent">
+<!--    <iframe src="loadException" height="500" width="100%">
+        </iframe>
+        -->
+     
+</div>
+
+<div id="DashDiv" class="tabcontent">
+
+	<div id="graphDiv">
+	</div>
+	
+	<div id="tableDiv">
+	</div>
+	<!-- 
+        <iframe src="Graph" height="400" width="47%">
+        </iframe>
+        <iframe src="DashboardTable" height="400" width="47%">
+        </iframe>
+      -->
+</div>
+
+
+<script>
+$(document).ready( function () {
+    $("#BasicBut").click(function(){
+		var id ={id : "1"};
+		$.get('/recontool/loadBasic',id,function(data,status){
+			$('#BasicDiv').html(data);
+		});
+	});
+});
+
+document.getElementById("BasicBut").click();
+
+$(document).ready( function () {
+    $("#LoadBut").click(function(){
+		var id ={id : "1"};
+		$.get('/recontool/loadException',id,function(data,status){
+			$('#LoadDiv').html(data);
+		});
+	});
+} );
+
+$(document).ready( function () {
+    $("#DashBut").click(function(){
+		var id ={id : "1"};
+		$.get('/recontool/Graph',id,function(data,status){
+			$('#graphDiv').html(data);
+		});
+		$.get('/recontool/DashboardTable',id,function(data,status){
+			$('#tableDiv').html(data);
+		});
+	});
+} );
 </script>
      
 </body>

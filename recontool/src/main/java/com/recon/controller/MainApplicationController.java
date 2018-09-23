@@ -67,8 +67,8 @@ public class MainApplicationController {
 	
 	@RequestMapping("/loadException")
 	public String loadException(HttpServletRequest request,Map<String, Object> model, Principal auth) {
-		//String id = request.getParameter("id");
-		String id = "1";
+		String id = request.getParameter("id");
+		//String id = "1";
 		//System.out.println(auth);
 		List<JsonModel> listOfJsonObject = reconDao.loadException(id);
 		List<BreakAction> listOfActions = reconDao.loadBreakActions();
