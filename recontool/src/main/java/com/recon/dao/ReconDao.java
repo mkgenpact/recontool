@@ -151,12 +151,14 @@ public void updateFoMoStatus(List<FoMoResponse> resList){
 		String jsonUpdStr = g.toJson(jsoUpArray);
 		System.out.println(jsonUpdStr);
 		
-		jdbcTemplate.update("update filerowdata set jsonrowdata =? where id= ? ", new PreparedStatementSetter() {
+		jdbcTemplate.update("update filerowdata set jsonrowdata =?,comment=?,actiontaken=? where id= ? ", new PreparedStatementSetter() {
 			
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
 				ps.setString(1, jsonUpdStr);
-				ps.setInt(2, Integer.parseInt(res.getId()));
+				ps.setString(2, jsonMode.getComment());
+				ps.setString(3, jsonMode.getActiontaken());
+				ps.setInt(4, Integer.parseInt(res.getId()));
 			}
 		});
 	}
@@ -184,7 +186,7 @@ public void populateReconRowData(ReconFile[] recons, int recFileId) {
 		List<BreakAction> breks =breakActions.stream().filter(action ->(action.getName().equals(recon.getBreakaction()))).
 		collect(Collectors.toList());
 		final String action = (breks!=null && breks.size()>0)?String.valueOf(breks.get(0).getId()):null;
-		jdbcTemplate.update("insert into filerowdata(reconfiles_id,jsonrowdata,breakactions_id) values(?,?,?)", new PreparedStatementSetter(){
+		jdbcTemplate.update("insert into filerowdata(reconfiles_id,jsonrowdata,breakactions_id,insertdate) values(?,?,?,CURDATE())", new PreparedStatementSetter(){
 
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {

@@ -21,7 +21,7 @@
    	 	 <tr>
    	 	 	<td><a id="recondId"><c:out value="${recon.reconId}"></c:out></a></td>
    	 	 	<td>
-             <a id="recondName" style="background-color: #feec04;"><u><c:out value="${recon.name}"></c:out></u></a>
+             <button id="recondName"><c:out value="${recon.name}"></c:out></button>
             </td>
             <td>
             <c:out value="${recon.description}"></c:out>

@@ -22,7 +22,7 @@
 <body>
 <div class="container">
 	<div class="page-header">
-		<span>Recon Resolution Tool</span>
+		<span>ART Tool</span>
 	</div>
 	<div id="logout">
 		<span class="glyphicon glyphicon-user"><a href="/recontool/logout" id="logoutMain">LogOut</a></span>
@@ -40,7 +40,7 @@
 		</form> -->
 		
 		<form>
-		    <label for="reconFile">Recon File</label>
+		    <label for="reconFile">Recon :</label>
   			<input list="browsers" name="browser" id="reconSearchId" placeholder="type to search recons file">
 			  <datalist id="browsers">
 			    <c:forEach var="recon" items="${recons}">
