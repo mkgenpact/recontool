@@ -81,67 +81,39 @@ document.getElementById("BasicBut").click();
 
 </head>
 <body>
-
 <div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'BasicDiv')"  id="BasicBut">Basic Information</button>
+  <button class="tablinks active" onclick="openTab(event, 'BasicDiv')"  id="BasicBut">Basic Information</button>
   <button class="tablinks" onclick="openTab(event, 'LoadDiv')" id="LoadBut" >Load Exception Categories</button>
   <button class="tablinks" onclick="openTab(event, 'DashDiv')" id="DashBut">Dashboard</button>
 </div>
 
 <div id="BasicDiv" class="tabcontent">
-       <!--
-            <iframe src='loadBasic?id="${id}"' height="500" width="100%">
-       		</iframe>
-       	 -->
+<%@ include file="BasicInfo.jsp" %>
 </div>
 
 <div id="LoadDiv" class="tabcontent">
-<!--    <iframe src="loadException" height="500" width="100%">
-        </iframe>
-        -->
-     
 </div>
 
 <div id="DashDiv" class="tabcontent">
-
 	<div id="graphDiv">
 	</div>
-	
 	<div id="tableDiv">
 	</div>
-	<!-- 
-        <iframe src="Graph" height="400" width="47%">
-        </iframe>
-        <iframe src="DashboardTable" height="400" width="47%">
-        </iframe>
-      -->
 </div>
 
 
 <script>
 $(document).ready( function () {
-    $("#BasicBut").click(function(){
-		var id ={id : "1"};
-		$.get('/recontool/loadBasic',id,function(data,status){
-			$('#BasicDiv').html(data);
-		});
-	});
-});
-
-document.getElementById("BasicBut").click();
-
-$(document).ready( function () {
     $("#LoadBut").click(function(){
-		var id ={id : "1"};
+		var id ={id : $("#recondId").text()};
 		$.get('/recontool/loadException',id,function(data,status){
 			$('#LoadDiv').html(data);
 		});
 	});
 } );
-
 $(document).ready( function () {
     $("#DashBut").click(function(){
-		var id ={id : "1"};
+    	var id ={id : $("#recondId").text()};
 		$.get('/recontool/Graph',id,function(data,status){
 			$('#graphDiv').html(data);
 		});
