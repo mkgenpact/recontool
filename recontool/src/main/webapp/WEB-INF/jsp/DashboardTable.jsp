@@ -6,19 +6,19 @@
 <html>
 <head>
 <style>
-table {
+#exceptionTblId {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-td, th {
+#exceptionTblId td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
 
-tr:nth-child(even) {
+#exceptionTblId tr:nth-child(even) {
     background-color: #dddddd;
 }
 </style>
@@ -27,7 +27,7 @@ tr:nth-child(even) {
 
 <h2>Exception category split</h2>
 
-<table>
+<table id="exceptionTblId">
   <tr>
     <th>Total Number of breaks</th>
     <th>Count</th>
