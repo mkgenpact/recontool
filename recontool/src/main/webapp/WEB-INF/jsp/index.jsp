@@ -17,6 +17,7 @@
   <script type="text/javascript" src="js/recon.js"></script>
   <link rel="stylesheet" href="css/recon.css">
   <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
   <script  src="js/jquery.dataTables.js"></script>
 </head>
 <body>
