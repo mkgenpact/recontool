@@ -105,6 +105,7 @@ public class MainApplicationController {
 	@RequestMapping("/mainPage")
 	public String mainPage(HttpServletRequest request,Map<String, Object> model) {
 		String fileId = request.getParameter("id");
+		loadBasic(request, model);
 
 		model.put("id", fileId);
 		return "Main";
