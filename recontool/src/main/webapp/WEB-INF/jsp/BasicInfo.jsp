@@ -2,9 +2,6 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false" %>
-<!DOCTYPE html>
-<html>
-<head>
 <style>
 table, td, th {    
     border: 1px solid #ddd;
@@ -19,12 +16,8 @@ table {
 th, td {
     padding: 15px;
 }
-
-
 </style>
-</head>
-<body>
-
+<div>
 <table>
   <tr>
     <th colspan="2" align="center">Recon file information</th>
@@ -59,6 +52,4 @@ th, td {
      </td>
   </tr>
 </table>
-
-</body>
-</html>
+</div>

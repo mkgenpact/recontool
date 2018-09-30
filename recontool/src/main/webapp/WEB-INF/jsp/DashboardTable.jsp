@@ -2,9 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false" %>
-<!DOCTYPE html>
-<html>
-<head>
+
 <style>
 #exceptionTblId {
     font-family: arial, sans-serif;
@@ -25,8 +23,8 @@
 </head>
 <body>
 
+<div>
 <h2>Exception category split</h2>
-
 <table id="exceptionTblId">
   <tr>
     <th>Total Number of breaks</th>
@@ -49,6 +47,5 @@
     <td><c:out value="${amcount}"></c:out></td>
   </tr>
 </table>
+</div>
 
-</body>
-</html>

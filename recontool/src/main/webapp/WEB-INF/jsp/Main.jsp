@@ -10,7 +10,7 @@
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    background-color: #e9bb43;
 }
 
 .tablinks {
@@ -42,7 +42,7 @@
 /* Create an active/current tablink class */
 .tab button.active {
     /*background-color: #ccc;*/
-    background-color: #1E90FF;
+    background-color: #f44271;
 }
 
 /* Style the tab content */
@@ -87,17 +87,17 @@ document.getElementById("BasicBut").click();
   <button class="tablinks" onclick="openTab(event, 'DashDiv')" id="DashBut">Dashboard</button>
 </div>
 
-<div id="BasicDiv" class="tabcontent">
+<div id="BasicDiv" class="tabcontent" style="background-color: #ecf7f9">
 <%@ include file="BasicInfo.jsp" %>
 </div>
 
-<div id="LoadDiv" class="tabcontent">
+<div id="LoadDiv" class="tabcontent" style="background-color: #ecf7f9">
 </div>
 
-<div id="DashDiv" class="tabcontent">
-	<div id="graphDiv">
+<div id="DashDiv" class="tabcontent" style="position: relative; height: 380px;background-color:  #ecf7f9;overflow: auto ">
+	<div id="graphDiv" style="position: absolute; top: 5px; left: 30px">
 	</div>
-	<div id="tableDiv">
+	<div id="tableDiv" style="position: absolute; top: 5px; right: 80px;">
 	</div>
 </div>
 
