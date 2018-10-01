@@ -24,9 +24,10 @@
         <td><c:out value="${exception.category}"></c:out></td>
         <td><c:out value="${exception.subcat1}"></c:out><br /><c:out value="${exception.subcat2}"></c:out></td>
 	       
-        <td><a><c:out value="${exception.action1}"></c:out></a> <br /> <a><c:out value="${exception.action2}"></c:out></a></td>
-        
-        <td>{Comments to be added by UI Path}</td>
+<%--         <td><a><c:out value="${exception.action1}"></c:out></a> <br /> <a><c:out value="${exception.action2}"></c:out></a></td> --%>
+        <td><input type="button" alt="${exception.fileRowId}" id="${exception.tradeid}" name="${exception.action1}" value="${exception.action1}"/><br/>
+        <input type="button" alt="${exception.fileRowId}" id="${exception.tradeid}" name="${exception.action2}" value="${exception.action2}"/></td>
+        <td><c:out value="${exception.comment}"></c:out></td>
       </tr>
      </c:forEach>
     </tbody>
