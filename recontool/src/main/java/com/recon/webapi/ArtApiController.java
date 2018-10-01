@@ -36,9 +36,11 @@ public class ArtApiController {
 	 * @return
 	 */
 	@PostMapping("/updateFoMoResponse")
-	public String updateFOMOResponse(@RequestBody List<FoMoResponse> fomoresp){
+	public String updateFOMOResponse(@RequestBody String fomoresp){
 		System.out.println(fomoresp.toString());
-		reconDao.updateFoMoStatus(fomoresp);
+		Gson g = new Gson();
+		FoMoResponse[] foMoUpdateArray = g.fromJson(fomoresp, FoMoResponse[].class);
+		reconDao.updateFoMoStatus(foMoUpdateArray);
 		return "updated Sucessfully";
 	}
 	

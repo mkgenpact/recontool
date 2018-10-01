@@ -5,6 +5,7 @@ package com.recon.model;
 //"FO Code":"VIP","Status":null,"Attribute":null,"Category":"Singleton","Value":null}]
 public class JsonModel {
 
+		private String fileRowId;
 		private String side;		
 		private String buysell;
 		private String tradeid;
@@ -14,6 +15,7 @@ public class JsonModel {
 		private String status;
 		private String attribute;
 		private String category;
+		private String subcategory;
 		private String value;
 		private String action1;
 		private String action2;
@@ -112,6 +114,17 @@ public class JsonModel {
 		public void setEntereddate(String entereddate) {
 			this.entereddate = entereddate;
 		}
-		
-		
+		public String getSubcategory() {
+			return subcategory;
+		}
+		public void setSubcategory(String subcategory) {
+			this.subcategory = subcategory;
+		}
+		public String getFileRowId() {
+			return fileRowId;
+		}
+		public void setFileRowId(String fileRowId) {
+			this.fileRowId = fileRowId;
+		}
+			
 }

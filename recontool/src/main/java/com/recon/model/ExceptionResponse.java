@@ -4,7 +4,7 @@ package com.recon.model;
 //[{"Side":"FO","BuySell":"Buy","TradeId":"12345","Counterparty ID":"1234","Counterparty name":"ABC DEF",
 //"FO Code":"VIP","Status":null,"Attribute":null,"Category":"Singleton","Value":null}]
 public class ExceptionResponse {
-
+		private String fileRowId;
 		private String tradeid;
 		private String counterpartyid;
 		private String category;
@@ -15,7 +15,7 @@ public class ExceptionResponse {
 		private String action1;
 		private String action2;
 		private String side;
-		
+		private String comment;
 		
 		public String getSide() {
 			return side;
@@ -76,6 +76,18 @@ public class ExceptionResponse {
 		}
 		public void setRef2(String ref2) {
 			this.ref2 = ref2;
+		}
+		public String getFileRowId() {
+			return fileRowId;
+		}
+		public void setFileRowId(String fileRowId) {
+			this.fileRowId = fileRowId;
+		}
+		public String getComment() {
+			return comment;
+		}
+		public void setComment(String comment) {
+			this.comment = comment;
 		}
 		
 		

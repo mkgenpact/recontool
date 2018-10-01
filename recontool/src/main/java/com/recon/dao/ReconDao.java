@@ -90,15 +90,19 @@ public List<ReconModel> loadReconsByName(String fileName){
 		
 		Gson g = new Gson(); 
 		
-		List<JsonModel> jsonData = jdbcTemplate.query("select jsonrowdata from filerowdata where reconfiles_id="+id,
+		List<JsonModel> jsonData = jdbcTemplate.query("select id,jsonrowdata, comment from filerowdata where reconfiles_id="+id,
 				new RowMapper<JsonModel>() {
 			@Override
 			public JsonModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String fileRowId = String.valueOf(rs.getInt("id"));
 				String jsonString = rs.getString("jsonrowdata");
+				String comment = rs.getString("comment");
 				//System.out.println(jsonString);
 				JsonModel[] p = null; 
 				p = g.fromJson(jsonString, JsonModel[].class);
 				//System.out.println(p);
+				p[0].setFileRowId(fileRowId);
+				p[0].setComment(comment);
 				return p[0];
 			}
 		});
@@ -125,7 +129,7 @@ public List<BreakAction> loadBreakActions(){
 	}
 
 
-public void updateFoMoStatus(List<FoMoResponse> resList){
+public void updateFoMoStatus(FoMoResponse[] resList){
 	for(FoMoResponse res : resList){
 		Gson g = new Gson(); 
 		List<JsonModel> jsonData = jdbcTemplate.query("select jsonrowdata from filerowdata where id="+Integer.parseInt(res.getId()),
