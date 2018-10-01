@@ -2,11 +2,13 @@
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:nj="clr-namespace:Newtonsoft.Json;assembly=Newtonsoft.Json"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
@@ -32,6 +34,8 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Newtonsoft.Json</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -55,13 +59,19 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
       <AssemblyReference>UiPath.Python</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="ResolutionAutomation" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:GenericValue" Name="FlowAction" />
       <Variable x:TypeArguments="ui:GenericValue" Name="TradeId" />
+      <Variable x:TypeArguments="sd:DataTable" Name="fileRowDataTable" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="UpdatedMessage" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="fileRowId" />
     </Sequence.Variables>
+    <ui:BuildDataTable DataTable="[fileRowDataTable]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;id&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;actiontaken&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;message&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;  &lt;TableName /&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
     <Sequence DisplayName="On click" sap2010:WorkflowViewState.IdRef="Sequence_9">
       <ui:MonitorEvents ContinueOnError="{x:Null}" DisplayName="Monitor events" sap2010:WorkflowViewState.IdRef="MonitorEvents_4" RepeatForever="True">
         <ui:MonitorEvents.Handler>
@@ -109,11 +119,31 @@
                           </Sequence>
                         </If.Then>
                       </If>
+                      <If Condition="[item.Key.Equals(&quot;alt&quot;)]" sap2010:WorkflowViewState.IdRef="If_3">
+                        <If.Then>
+                          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_28">
+                            <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="ui:GenericValue">[fileRowId]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="ui:GenericValue">[item.Value.ToString]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </Sequence>
+                        </If.Then>
+                      </If>
                     </Sequence>
                   </ActivityAction>
                 </ui:ForEach.Body>
               </ui:ForEach>
               <Sequence sap2010:WorkflowViewState.IdRef="Sequence_10">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="ui:GenericValue" Name="fileRowJsonObject" />
+                  <Variable x:TypeArguments="nj:JsonConvert" Name="jsonConvert" />
+                  <Variable x:TypeArguments="x:String" Name="Response" />
+                  <Variable x:TypeArguments="x:Int32" Name="ResponseStatusCode" />
+                </Sequence.Variables>
                 <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[FlowAction.ToString]" sap2010:WorkflowViewState.IdRef="Switch`1_2">
                   <Sequence x:Key="ActivateFO" DisplayName="ActiveFO" sap2010:WorkflowViewState.IdRef="Sequence_11">
                     <ui:OpenBrowser UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Open browser" Hidden="False" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" Url="http://localhost:8099/fomosystem/login">
@@ -124,9 +154,6 @@
                           </ActivityAction.Argument>
                           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_18">
                             <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_13">
-                              <Sequence.Variables>
-                                <Variable x:TypeArguments="ui:GenericValue" Name="UpdatedMessage" />
-                              </Sequence.Variables>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  username'" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_1" SendWindowMessages="False" SimulateType="False" Text="mithun">
                                 <ui:TypeInto.Target>
                                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ca6372918ff23bed96f73103b40fec71" Selector="&lt;webctrl id='username' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
@@ -186,7 +213,7 @@
                               </ui:Click>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  tradeDate'" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeInto_4" SendWindowMessages="False" SimulateType="False" Text="Active">
                                 <ui:TypeInto.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1e3fe76f9c6117342746f93d9c3a871b" Selector="&lt;webctrl id='tradeDate' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a5f3d7401d7a93531b2b8575d88c0149" Selector="&lt;webctrl id='Status' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:TypeInto.Target>
                               </ui:TypeInto>
                               <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'INPUT'" sap2010:WorkflowViewState.IdRef="Click_4" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
@@ -201,18 +228,17 @@
                                   </ui:CursorPosition>
                                 </ui:Click.CursorPosition>
                                 <ui:Click.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3e8aa38ada70180f4d349de57d6825e2" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="da43e529cc483c44c1594677b1a5e566" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:Click.Target>
                               </ui:Click>
                               <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'SPAN'" sap2010:WorkflowViewState.IdRef="GetValue_1">
                                 <ui:GetValue.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7ffbd87f134b26b848bbcd72303b6752" Selector="&lt;webctrl aaname='successfully create or updated' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e50329b808c0873704eff644fd9c2ba6" Selector="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;span' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:GetValue.Target>
                                 <ui:GetValue.Value>
                                   <OutArgument x:TypeArguments="ui:GenericValue">[UpdatedMessage]</OutArgument>
                                 </ui:GetValue.Value>
                               </ui:GetValue>
-                              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_6" Text="[UpdatedMessage]" TopMost="True" />
                             </Sequence>
                             <ui:CloseTab Browser="{x:Null}" DisplayName="Close tab" sap2010:WorkflowViewState.IdRef="CloseTab_1" />
                           </Sequence>
@@ -229,9 +255,6 @@
                           </ActivityAction.Argument>
                           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_20">
                             <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_19">
-                              <Sequence.Variables>
-                                <Variable x:TypeArguments="ui:GenericValue" Name="UpdatedMessage" />
-                              </Sequence.Variables>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  username'" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_5" SendWindowMessages="False" SimulateType="False" Text="mithun">
                                 <ui:TypeInto.Target>
                                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ca6372918ff23bed96f73103b40fec71" Selector="&lt;webctrl id='username' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
@@ -291,7 +314,7 @@
                               </ui:Click>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  tradeDate'" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeInto_8" SendWindowMessages="False" SimulateType="False" Text="Inactive">
                                 <ui:TypeInto.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1e3fe76f9c6117342746f93d9c3a871b" Selector="&lt;webctrl id='tradeDate' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="5284b496319189f382aee7758f857f00" Selector="&lt;webctrl id='status' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:TypeInto.Target>
                               </ui:TypeInto>
                               <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'INPUT'" sap2010:WorkflowViewState.IdRef="Click_7" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
@@ -306,18 +329,17 @@
                                   </ui:CursorPosition>
                                 </ui:Click.CursorPosition>
                                 <ui:Click.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3e8aa38ada70180f4d349de57d6825e2" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="bdc87286647b37fb43865776427b52c4" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:Click.Target>
                               </ui:Click>
                               <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'SPAN'" sap2010:WorkflowViewState.IdRef="GetValue_2">
                                 <ui:GetValue.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7ffbd87f134b26b848bbcd72303b6752" Selector="&lt;webctrl aaname='successfully create or updated' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="d5d542b8d85822ee6b1fc0124108e4cb" Selector="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;span' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:GetValue.Target>
                                 <ui:GetValue.Value>
                                   <OutArgument x:TypeArguments="ui:GenericValue">[UpdatedMessage]</OutArgument>
                                 </ui:GetValue.Value>
                               </ui:GetValue>
-                              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_7" Text="[UpdatedMessage]" TopMost="True" />
                             </Sequence>
                             <ui:CloseTab Browser="{x:Null}" DisplayName="Close tab" sap2010:WorkflowViewState.IdRef="CloseTab_2" />
                           </Sequence>
@@ -326,7 +348,15 @@
                     </ui:OpenBrowser>
                   </Sequence>
                   <Sequence x:Key="IntimateMO/RD" DisplayName="IntimateMO/RD" sap2010:WorkflowViewState.IdRef="Sequence_21">
-                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_8" Text="Intimated MO/RD systems" TopMost="True" />
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="ui:GenericValue">[UpdatedMessage]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="ui:GenericValue">["Intimated MO/RD systems"]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_8" Text="[UpdatedMessage]" TopMost="True" />
                   </Sequence>
                   <Sequence x:Key="UpdateFO" DisplayName="UpdateFO" sap2010:WorkflowViewState.IdRef="Sequence_22">
                     <ui:OpenBrowser UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Open browser" Hidden="False" sap2010:WorkflowViewState.IdRef="OpenBrowser_3" NewSession="True" Private="False" Url="http://localhost:8099/fomosystem/login">
@@ -337,9 +367,6 @@
                           </ActivityAction.Argument>
                           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_24">
                             <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_23">
-                              <Sequence.Variables>
-                                <Variable x:TypeArguments="ui:GenericValue" Name="UpdatedMessage" />
-                              </Sequence.Variables>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  username'" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_9" SendWindowMessages="False" SimulateType="False" Text="mithun">
                                 <ui:TypeInto.Target>
                                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ca6372918ff23bed96f73103b40fec71" Selector="&lt;webctrl id='username' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
@@ -399,7 +426,7 @@
                               </ui:Click>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  tradeDate'" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeInto_12" SendWindowMessages="False" SimulateType="False" Text="500">
                                 <ui:TypeInto.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7a43ebaaad5d1f739e63c1fcf318ae65" Selector="&lt;webctrl id='amount' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="15bd4f783b1ebe9f6813018abada534d" Selector="&lt;webctrl id='amount' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:TypeInto.Target>
                               </ui:TypeInto>
                               <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'INPUT'" sap2010:WorkflowViewState.IdRef="Click_10" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
@@ -414,18 +441,17 @@
                                   </ui:CursorPosition>
                                 </ui:Click.CursorPosition>
                                 <ui:Click.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3e8aa38ada70180f4d349de57d6825e2" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="da43e529cc483c44c1594677b1a5e566" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:Click.Target>
                               </ui:Click>
                               <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'SPAN'" sap2010:WorkflowViewState.IdRef="GetValue_3">
                                 <ui:GetValue.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7ffbd87f134b26b848bbcd72303b6752" Selector="&lt;webctrl aaname='successfully create or updated' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e50329b808c0873704eff644fd9c2ba6" Selector="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;span' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:GetValue.Target>
                                 <ui:GetValue.Value>
                                   <OutArgument x:TypeArguments="ui:GenericValue">[UpdatedMessage]</OutArgument>
                                 </ui:GetValue.Value>
                               </ui:GetValue>
-                              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_9" Text="[UpdatedMessage]" TopMost="True" />
                             </Sequence>
                             <ui:CloseTab Browser="{x:Null}" DisplayName="Close tab" sap2010:WorkflowViewState.IdRef="CloseTab_3" />
                           </Sequence>
@@ -442,9 +468,6 @@
                           </ActivityAction.Argument>
                           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_26">
                             <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_25">
-                              <Sequence.Variables>
-                                <Variable x:TypeArguments="ui:GenericValue" Name="UpdatedMessage" />
-                              </Sequence.Variables>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  username'" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_13" SendWindowMessages="False" SimulateType="False" Text="mithun">
                                 <ui:TypeInto.Target>
                                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ca6372918ff23bed96f73103b40fec71" Selector="&lt;webctrl id='username' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
@@ -504,7 +527,7 @@
                               </ui:Click>
                               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into 'INPUT  tradeDate'" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeInto_16" SendWindowMessages="False" SimulateType="False" Text="Inactive">
                                 <ui:TypeInto.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1e3fe76f9c6117342746f93d9c3a871b" Selector="&lt;webctrl id='tradeDate' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a5f3d7401d7a93531b2b8575d88c0149" Selector="&lt;webctrl id='Status' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:TypeInto.Target>
                               </ui:TypeInto>
                               <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'INPUT'" sap2010:WorkflowViewState.IdRef="Click_13" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
@@ -519,18 +542,17 @@
                                   </ui:CursorPosition>
                                 </ui:Click.CursorPosition>
                                 <ui:Click.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3e8aa38ada70180f4d349de57d6825e2" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="f4fd47dd8c9295acc82fd63d5c39305c" Selector="&lt;webctrl tag='INPUT' type='submit' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:Click.Target>
                               </ui:Click>
                               <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'SPAN'" sap2010:WorkflowViewState.IdRef="GetValue_4">
                                 <ui:GetValue.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7ffbd87f134b26b848bbcd72303b6752" Selector="&lt;webctrl aaname='successfully create or updated' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e50329b808c0873704eff644fd9c2ba6" Selector="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;span' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
                                 </ui:GetValue.Target>
                                 <ui:GetValue.Value>
                                   <OutArgument x:TypeArguments="ui:GenericValue">[UpdatedMessage]</OutArgument>
                                 </ui:GetValue.Value>
                               </ui:GetValue>
-                              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_10" Text="[UpdatedMessage]" TopMost="True" />
                             </Sequence>
                             <ui:CloseTab Browser="{x:Null}" DisplayName="Close tab" sap2010:WorkflowViewState.IdRef="CloseTab_4" />
                           </Sequence>
@@ -539,23 +561,65 @@
                     </ui:OpenBrowser>
                   </Sequence>
                 </Switch>
+                <ui:ClearDataTable DataTable="[fileRowDataTable]" DisplayName="Clear data table" sap2010:WorkflowViewState.IdRef="ClearDataTable_2" />
+                <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{fileRowId,FlowAction.ToString,UpdatedMessage.ToString}]" DataTable="[fileRowDataTable]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="ui:GenericValue">[fileRowJsonObject]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="ui:GenericValue">[jsonConvert.SerializeObject(fileRowDataTable)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <ui:HttpClient ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" Body="[fileRowJsonObject]" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="http://localhost:8098/recontool/artApi/updateFoMoResponse" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="POST" Result="[Response]" StatusCode="[ResponseStatusCode]" TimeoutMS="6000">
+                  <ui:HttpClient.Attachments>
+                    <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                  </ui:HttpClient.Attachments>
+                  <ui:HttpClient.Headers>
+                    <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                  </ui:HttpClient.Headers>
+                  <ui:HttpClient.Parameters>
+                    <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                  </ui:HttpClient.Parameters>
+                  <ui:HttpClient.UrlSegments>
+                    <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                  </ui:HttpClient.UrlSegments>
+                </ui:HttpClient>
+                <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message box" sap2010:WorkflowViewState.IdRef="MessageBox_11" Text="[&quot;Response : &quot;+Response.ToString+&quot;Status code : &quot;+ResponseStatusCode.ToString]" TopMost="True" />
+                <ui:ClearDataTable DataTable="[fileRowDataTable]" DisplayName="Clear data table" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
               </Sequence>
+              <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'BUTTON  LoadBut'" sap2010:WorkflowViewState.IdRef="Click_14" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                <ui:Click.CursorPosition>
+                  <ui:CursorPosition Position="Center">
+                    <ui:CursorPosition.OffsetX>
+                      <InArgument x:TypeArguments="x:Int32" />
+                    </ui:CursorPosition.OffsetX>
+                    <ui:CursorPosition.OffsetY>
+                      <InArgument x:TypeArguments="x:Int32" />
+                    </ui:CursorPosition.OffsetY>
+                  </ui:CursorPosition>
+                </ui:Click.CursorPosition>
+                <ui:Click.Target>
+                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ff178b4fa2690dbf1d51906d209df9d8" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/login' /&gt;&lt;webctrl id='LoadBut' tag='BUTTON' /&gt;" WaitForReady="INTERACTIVE" />
+                </ui:Click.Target>
+              </ui:Click>
             </Sequence>
           </ActivityAction>
         </ui:MonitorEvents.Handler>
         <ui:MonitorEvents.Triggers>
-          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_2" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/' /&gt;&lt;webctrl name='ActivateFO' tag='INPUT' /&gt;" />
-          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_3" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/' /&gt;&lt;webctrl name='InactivateMO' tag='INPUT' /&gt;" />
-          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_5" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/' /&gt;&lt;webctrl name='IntimateMO/RD' tag='INPUT' /&gt;" />
-          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_6" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/' /&gt;&lt;webctrl name='UpdateFO' tag='INPUT' /&gt;" />
-          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_7" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/' /&gt;&lt;webctrl name='InactivateFO' tag='INPUT' /&gt;" />
+          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_2" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/login' /&gt;&lt;webctrl id='12345' name='ActivateFO' tag='INPUT' /&gt;" />
+          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_3" IncludeChildren="True" InformativeScreenshot="db432e2a1bea473ba79008d1f0192f64" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/login' /&gt;&lt;webctrl id='76545' name='InactivateMO' tag='INPUT' /&gt;" />
+          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_5" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/login' /&gt;&lt;webctrl name='IntimateMO/RD' tag='INPUT' /&gt;" />
+          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_6" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/login' /&gt;&lt;webctrl name='UpdateFO' tag='INPUT' /&gt;" />
+          <ui:ClickTrigger ClippingRegion="{x:Null}" DisplayName="Click trigger 'BUTTON'" EventType="EVENT_SYNCHRONOUS" sap2010:WorkflowViewState.IdRef="ClickTrigger_7" IncludeChildren="True" InformativeScreenshot="bca03fea4ffac1382b03862b440b017e" KeyModifiers="None" MouseButton="BTN_LEFT" Selector="&lt;html app='chrome.exe' url='http://localhost:8098/recontool/login' /&gt;&lt;webctrl name='InactivateFO' tag='INPUT' /&gt;" />
         </ui:MonitorEvents.Triggers>
       </ui:MonitorEvents>
     </Sequence>
-    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="BuildDataTable_1" sap:VirtualizedContainerService.HintSize="1854,59" />
       <sap2010:ViewStateData Id="GetSourceElement_3" sap:VirtualizedContainerService.HintSize="502,22" />
       <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="242,60" />
       <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="264,184">
@@ -575,14 +639,23 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,331" />
-      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="486,826">
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Sequence_28" sap:VirtualizedContainerService.HintSize="264,184">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="502,959" />
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,331" />
+      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="486,1197">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="502,1330" />
       <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="314,134" />
       <sap2010:ViewStateData Id="TypeInto_2" sap:VirtualizedContainerService.HintSize="314,134" />
       <sap2010:ViewStateData Id="SelectItem_1" sap:VirtualizedContainerService.HintSize="314,134" />
@@ -592,8 +665,7 @@
       <sap2010:ViewStateData Id="TypeInto_4" sap:VirtualizedContainerService.HintSize="314,134" />
       <sap2010:ViewStateData Id="Click_4" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="GetValue_1" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="MessageBox_6" sap:VirtualizedContainerService.HintSize="314,59" />
-      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="336,1637">
+      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="336,1538">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -601,19 +673,19 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="CloseTab_1" sap:VirtualizedContainerService.HintSize="336,22" />
-      <sap2010:ViewStateData Id="Sequence_18" sap:VirtualizedContainerService.HintSize="358,1823">
+      <sap2010:ViewStateData Id="Sequence_18" sap:VirtualizedContainerService.HintSize="358,1724">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="414,1922" />
+      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="414,1823" />
       <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -626,8 +698,7 @@
       <sap2010:ViewStateData Id="TypeInto_8" sap:VirtualizedContainerService.HintSize="314,134" />
       <sap2010:ViewStateData Id="Click_7" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="GetValue_2" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="MessageBox_7" sap:VirtualizedContainerService.HintSize="314,59" />
-      <sap2010:ViewStateData Id="Sequence_19" sap:VirtualizedContainerService.HintSize="336,1637">
+      <sap2010:ViewStateData Id="Sequence_19" sap:VirtualizedContainerService.HintSize="336,1538">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -635,26 +706,29 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="CloseTab_2" sap:VirtualizedContainerService.HintSize="336,22" />
-      <sap2010:ViewStateData Id="Sequence_20" sap:VirtualizedContainerService.HintSize="358,1823">
+      <sap2010:ViewStateData Id="Sequence_20" sap:VirtualizedContainerService.HintSize="358,1724">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenBrowser_2" sap:VirtualizedContainerService.HintSize="414,1922" />
-      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="436,2006">
+      <sap2010:ViewStateData Id="OpenBrowser_2" sap:VirtualizedContainerService.HintSize="414,1823" />
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="314,60" />
       <sap2010:ViewStateData Id="MessageBox_8" sap:VirtualizedContainerService.HintSize="314,59" />
-      <sap2010:ViewStateData Id="Sequence_21" sap:VirtualizedContainerService.HintSize="336,183">
+      <sap2010:ViewStateData Id="Sequence_21" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -667,8 +741,7 @@
       <sap2010:ViewStateData Id="TypeInto_12" sap:VirtualizedContainerService.HintSize="314,134" />
       <sap2010:ViewStateData Id="Click_10" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="GetValue_3" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="MessageBox_9" sap:VirtualizedContainerService.HintSize="314,59" />
-      <sap2010:ViewStateData Id="Sequence_23" sap:VirtualizedContainerService.HintSize="336,1637">
+      <sap2010:ViewStateData Id="Sequence_23" sap:VirtualizedContainerService.HintSize="336,1538">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -676,18 +749,19 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="CloseTab_3" sap:VirtualizedContainerService.HintSize="336,22" />
-      <sap2010:ViewStateData Id="Sequence_24" sap:VirtualizedContainerService.HintSize="358,1823">
+      <sap2010:ViewStateData Id="Sequence_24" sap:VirtualizedContainerService.HintSize="358,1724">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenBrowser_3" sap:VirtualizedContainerService.HintSize="414,1922" />
-      <sap2010:ViewStateData Id="Sequence_22" sap:VirtualizedContainerService.HintSize="436,2006">
+      <sap2010:ViewStateData Id="OpenBrowser_3" sap:VirtualizedContainerService.HintSize="414,1823" />
+      <sap2010:ViewStateData Id="Sequence_22" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -700,8 +774,7 @@
       <sap2010:ViewStateData Id="TypeInto_16" sap:VirtualizedContainerService.HintSize="314,134" />
       <sap2010:ViewStateData Id="Click_13" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="GetValue_4" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="MessageBox_10" sap:VirtualizedContainerService.HintSize="314,59" />
-      <sap2010:ViewStateData Id="Sequence_25" sap:VirtualizedContainerService.HintSize="336,1637">
+      <sap2010:ViewStateData Id="Sequence_25" sap:VirtualizedContainerService.HintSize="336,1538">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -709,31 +782,38 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="CloseTab_4" sap:VirtualizedContainerService.HintSize="336,22" />
-      <sap2010:ViewStateData Id="Sequence_26" sap:VirtualizedContainerService.HintSize="358,1823">
+      <sap2010:ViewStateData Id="Sequence_26" sap:VirtualizedContainerService.HintSize="358,1724">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="OpenBrowser_4" sap:VirtualizedContainerService.HintSize="414,1922" />
+      <sap2010:ViewStateData Id="OpenBrowser_4" sap:VirtualizedContainerService.HintSize="414,1823" />
       <sap2010:ViewStateData Id="Sequence_27" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Switch`1_2" sap:VirtualizedContainerService.HintSize="476,331" />
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="502,455">
+      <sap2010:ViewStateData Id="Switch`1_2" sap:VirtualizedContainerService.HintSize="476,859" />
+      <sap2010:ViewStateData Id="ClearDataTable_2" sap:VirtualizedContainerService.HintSize="476,22" />
+      <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="476,22" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="476,60" />
+      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="476,22" />
+      <sap2010:ViewStateData Id="MessageBox_11" sap:VirtualizedContainerService.HintSize="476,59" />
+      <sap2010:ViewStateData Id="ClearDataTable_1" sap:VirtualizedContainerService.HintSize="476,22" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="502,1430">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="524,1640">
+      <sap2010:ViewStateData Id="Click_14" sap:VirtualizedContainerService.HintSize="502,106" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="524,3132">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -745,22 +825,28 @@
       <sap2010:ViewStateData Id="ClickTrigger_5" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="ClickTrigger_6" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="ClickTrigger_7" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="MonitorEvents_4" sap:VirtualizedContainerService.HintSize="1832,1830" />
-      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="1854,1954">
+      <sap2010:ViewStateData Id="MonitorEvents_4" sap:VirtualizedContainerService.HintSize="1832,3442" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="1854,3176">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="1876,2078">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="1876,3399">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ResolutionAutomation_1" sap:VirtualizedContainerService.HintSize="1916,2158" />
+      <sap2010:ViewStateData Id="ResolutionAutomation_1" sap:VirtualizedContainerService.HintSize="1916,3759">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
