@@ -72,6 +72,8 @@ public class MainApplicationController {
 		//System.out.println(auth);
 		List<JsonModel> listOfJsonObject = reconDao.loadException(id);
 		List<BreakAction> listOfActions = reconDao.loadBreakActions();
+		Authentication authUser = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(authUser.getAuthorities());
 		Map<String, ExceptionResponse> exceptionRes = new HashMap<String, ExceptionResponse>();
 		
 		for(JsonModel eachModel: listOfJsonObject) {
@@ -96,6 +98,7 @@ public class MainApplicationController {
 		}
 		
 		model.put("exceptions", exceptionRes.values());
+		model.put("access", authUser.getAuthorities());
 		return "Exception2";
 	}
 	
