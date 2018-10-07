@@ -67,8 +67,8 @@ public class MainApplicationController {
 	
 	@RequestMapping("/loadException")
 	public String loadException(HttpServletRequest request,Map<String, Object> model, Principal auth) {
-		String id = request.getParameter("id");
-		//String id = "1";
+		//String id = request.getParameter("id");
+		String id = "1";
 		//System.out.println(auth);
 		List<JsonModel> listOfJsonObject = reconDao.loadException(id);
 		List<BreakAction> listOfActions = reconDao.loadBreakActions();
@@ -80,22 +80,23 @@ public class MainApplicationController {
 			next.setTradeid(eachModel.getTradeid());
 			next.setSide(eachModel.getSide());
 			next.setCounterpartyid(eachModel.getCounterpartyid());
+			next.setComment(eachModel.getComment());
 			next.setCategory(eachModel.getCategory());
 			next.setSubcat1(eachModel.getSubcategory());
-			if(eachModel.getSubcategory() != null) {
+			if(eachModel.getCategory() != null) {
 				for(BreakAction actions: listOfActions) {
-					if(actions.getName().equals(eachModel.getSubcategory())){
+					if(actions.getName().equals(eachModel.getCategory())){
 						next.setAction1(actions.getAction1());
 						next.setAction2(actions.getAction2());
 					}
 				}
 				exceptionRes.put(eachModel.getTradeid(), next);
 			}
-			next.setComment(eachModel.getComment());
+			
 		}
 		
 		model.put("exceptions", exceptionRes.values());
-		return "Exception";
+		return "Exception2";
 	}
 	
 	@RequestMapping("/loadReportDashboard")
