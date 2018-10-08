@@ -23,6 +23,13 @@ public class JsonModel {
 		private String actiontaken;
 		private String entereddate;
 		
+		public String getBreakactionid() {
+			return breakactionid;
+		}
+		public void setBreakactionid(String breakactionid) {
+			this.breakactionid = breakactionid;
+		}
+		private String breakactionid;
 		
 		public String getAction1() {
 			return action1;
