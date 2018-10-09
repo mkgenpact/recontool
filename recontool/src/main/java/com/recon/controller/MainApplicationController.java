@@ -95,7 +95,7 @@ public class MainApplicationController {
 		
 		model.put("exceptions", exceptionRes.values());
 		model.put("access", authUser.getAuthorities());
-		return "Exception";
+		return "Exception2";
 	}
 	
 	@RequestMapping("/loadReportDashboard")
