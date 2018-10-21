@@ -3,11 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div>
   <br />
-  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <input class="form-control warning" id="myInput" type="text" placeholder="Search..">
   <br>
   <table class="table table-bordered table-striped">
     <thead>
-      <tr>
+      <tr class="success">
+        <th></th>
         <th>Trade ID</th>
         <th>Counter Party ID</th>
         <th>Exception Category</th>
@@ -18,7 +19,8 @@
     </thead>
     <tbody id="myTable">
     <c:forEach items="${exceptions}" var="exception">
-      <tr>
+      <tr class="info">
+      	<td><input type="checkbox" name="tradeIds" value="${exception.tradeid}" /></td>
         <td><c:out value="${exception.tradeid}"></c:out></td>
         <td><c:out value="${exception.counterpartyid}"></c:out></td>
         <td><c:out value="${exception.category}"></c:out></td>

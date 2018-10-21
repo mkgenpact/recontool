@@ -87,14 +87,14 @@ document.getElementById("BasicBut").click();
   <button class="tablinks" onclick="openTab(event, 'DashDiv')" id="DashBut">Dashboard</button>
 </div>
 
-<div id="BasicDiv" class="tabcontent" style="background-color: #ecf7f9">
+<div id="BasicDiv" class="tabcontent">
 <%@ include file="BasicInfo.jsp" %>
 </div>
 
-<div id="LoadDiv" class="tabcontent" style="background-color: #ecf7f9">
+<div id="LoadDiv" class="tabcontent">
 </div>
 
-<div id="DashDiv" class="tabcontent" style="position: relative; height: 380px;background-color:  #ecf7f9;overflow: auto ">
+<div id="DashDiv" class="tabcontent" style="position: relative; height: 380px;overflow: auto ">
 	<div id="graphDiv" style="position: absolute; top: 5px; left: 30px">
 	</div>
 	<div id="tableDiv" style="position: absolute; top: 5px; right: 80px;">

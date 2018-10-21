@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false" %>
 <style>
-table, td, th {    
+/* table, td, th {    
     border: 1px solid #ddd;
     text-align: left;
 }
@@ -15,30 +15,30 @@ table {
 
 th, td {
     padding: 15px;
-}
+} */
 </style>
 <div>
-<table>
-  <tr>
+<table class="table table-bordered table-striped">
+  <tr class="success">
     <th colspan="2" align="center">Recon file information</th>
   </tr>
-  <tr>
+  <tr class="info">
     <td>Name</td>
     <td><c:out value="${recon.name}"></c:out></td>
   </tr>
-  <tr>
+  <tr class="warning">
     <td>Path</td>
     <td><c:out value="${recon.information}"></c:out></td>
   </tr>
-  <tr>
+  <tr class="info">
     <td>RUN Schedule</td>
     <td><c:out value="${recon.runschedule}"></c:out></td>
   </tr>
-  <tr>
+  <tr class="warning">
     <td>Description</td>
     <td><c:out value="${recon.description}"></c:out></td>
   </tr>
-   <tr>
+   <tr class="info">
     <td>Browser file</td>
     <td>
     	<form method="POST" action="upload" enctype="multipart/form-data" >

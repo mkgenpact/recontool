@@ -84,8 +84,10 @@ public class MainApplicationController {
 			next.setComment(eachModel.getComment());
 			next.setCategory(eachModel.getCategory());
 			next.setSubcat1(eachModel.getSubcategory());
+			final String excepetionCategory = eachModel.getCategory().replaceAll("\\s","");
 			for (BreakAction action : listOfActions) {
-				if (String.valueOf(action.getId()).equals(eachModel.getBreakactionid())) {
+				final String breakActionExce = action.getName().replaceAll("\\s","");
+				if (breakActionExce.equalsIgnoreCase(excepetionCategory)) {
 					next.setAction1(action.getAction1());
 					next.setAction2(action.getAction2());
 				}
@@ -95,7 +97,7 @@ public class MainApplicationController {
 		
 		model.put("exceptions", exceptionRes.values());
 		model.put("access", authUser.getAuthorities());
-		return "Exception2";
+		return "Exception";
 	}
 	
 	@RequestMapping("/loadReportDashboard")
