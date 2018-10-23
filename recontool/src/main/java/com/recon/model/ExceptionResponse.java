@@ -7,6 +7,7 @@ public class ExceptionResponse {
 		private String fileRowId;
 		private String tradeid;
 		private String counterpartyid;
+		private String counterpartyName;
 		private String category;
 		private String subcat1;
 		private String subcat2;
@@ -16,6 +17,42 @@ public class ExceptionResponse {
 		private String action2;
 		private String side;
 		private String comment;
+		private String attributeName;
+		private String attributeValue;
+		private String status;
+		private Integer breakId;
+		
+		public Integer getBreakId() {
+			return breakId;
+		}
+		public void setBreakId(Integer breakId) {
+			this.breakId = breakId;
+		}
+		
+		public String getStatus() {
+			return status;
+		}
+		public void setStatus(String status) {
+			this.status = status;
+		}
+		public String getAttributeName() {
+			return attributeName;
+		}
+		public void setAttributeName(String attributeName) {
+			this.attributeName = attributeName;
+		}
+		public String getAttributeValue() {
+			return attributeValue;
+		}
+		public void setAttributeValue(String attributeValue) {
+			this.attributeValue = attributeValue;
+		}
+		public String getCounterpartyName() {
+			return counterpartyName;
+		}
+		public void setCounterpartyName(String counterpartyName) {
+			this.counterpartyName = counterpartyName;
+		}
 		
 		public String getSide() {
 			return side;

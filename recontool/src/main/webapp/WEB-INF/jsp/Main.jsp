@@ -106,10 +106,11 @@ document.getElementById("BasicBut").click();
 $(document).ready( function () {
     $("#LoadBut").click(function(){
 		var id ={id : $("#recondId").text()};
-		$.get('/recontool/loadException',id,function(data,status){
+		$.get('/recontool/loadExceptionFilter',id,function(data,status){
 			$('#LoadDiv').html(data);
 		});
 	});
+
 } );
 $(document).ready( function () {
     $("#DashBut").click(function(){

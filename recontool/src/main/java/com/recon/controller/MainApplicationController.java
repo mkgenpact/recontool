@@ -65,8 +65,17 @@ public class MainApplicationController {
 		return "BasicInfo";
 	}
 	
+	@RequestMapping("/loadExceptionFilter")
+	public String loadExceptionFilter(HttpServletRequest request,Map<String, Object> model, Principal auth) {
+		List<BreakAction> listOfActions = reconDao.loadBreakActions();
+		model.put("breakActions", listOfActions);
+		return "Exception";
+	}
+	
 	@RequestMapping("/loadException")
 	public String loadException(HttpServletRequest request,Map<String, Object> model, Principal auth) {
+		String category = request.getParameter("category");
+		System.out.println(category);
 		String id = request.getParameter("id");
 		//System.out.println(auth);
 		List<JsonModel> listOfJsonObject = reconDao.loadException(id);
@@ -80,24 +89,47 @@ public class MainApplicationController {
 			next.setFileRowId(eachModel.getFileRowId());
 			next.setTradeid(eachModel.getTradeid());
 			next.setSide(eachModel.getSide());
-			next.setCounterpartyid(eachModel.getCounterpartyid());
 			next.setComment(eachModel.getComment());
 			next.setCategory(eachModel.getCategory());
 			next.setSubcat1(eachModel.getSubcategory());
+			next.setAttributeName(eachModel.getAttribute());
+			next.setAttributeValue(eachModel.getValue());
+			next.setCounterpartyName(eachModel.getCounterpartyname());
+			next.setStatus(eachModel.getStatus());
 			final String excepetionCategory = eachModel.getCategory().replaceAll("\\s","");
 			for (BreakAction action : listOfActions) {
 				final String breakActionExce = action.getName().replaceAll("\\s","");
 				if (breakActionExce.equalsIgnoreCase(excepetionCategory)) {
 					next.setAction1(action.getAction1());
 					next.setAction2(action.getAction2());
+					next.setBreakId(action.getId());
 				}
 			}
-			exceptionRes.put(eachModel.getTradeid(), next);
+			if(category !=null && !"0".equals(category)){
+				if(Integer.valueOf(category) == next.getBreakId()){
+					exceptionRes.put(eachModel.getTradeid(), next);
+				}
+			}else{
+				exceptionRes.put(eachModel.getTradeid(), next);
+			}
+			
 		}
 		
 		model.put("exceptions", exceptionRes.values());
 		model.put("access", authUser.getAuthorities());
-		return "Exception";
+		model.put("breakActions", listOfActions);
+		model.put("excCategoryId",Integer.valueOf(category));
+		if(category !=null && !"0".equals(category)){
+			
+			for (BreakAction action : listOfActions) {
+				if(action.getId() == Integer.valueOf(category) ){
+					model.put("action1", action.getAction1());
+					model.put("action2", action.getAction2());
+					break;
+				}
+			}
+		}
+		return "ExceptionPage";
 	}
 	
 	@RequestMapping("/loadReportDashboard")
