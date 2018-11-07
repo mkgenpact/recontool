@@ -23,7 +23,7 @@
     <c:forEach items="${exceptions}" var="exception">
       <tr class="info">
        <c:if test="${excCategoryId != 0}">
-      	<td><input type="checkbox" id="${exception.tradeid}" onclick="validateCategory('${exception.tradeid}','${exception.category}')"  name="tradeIds" value="${exception.tradeid}" /></td>
+      	<td><input type="checkbox" alt="${exception.fileRowId}" id="checkBox" onclick="validateCategory('${exception.tradeid}','${exception.category}')"  name="${exception.tradeid}" /></td>
       	</c:if>
         <td><c:out value="${exception.tradeid}"></c:out></td>
         <td><c:out value="${exception.counterpartyName}"></c:out></td>
@@ -41,8 +41,8 @@
      </c:forEach>
      <c:if test="${excCategoryId != 0}">
      <tr class="warning" id="comulativeAction">
-      	<td colspan="9"><input type="button" value="${action1}" onclick="validateChecked()"/> 
-      	<input type="button" value="${action2}" onclick="validateChecked()"/></td>
+      	<td colspan="9"><input type="button" id="multi" value="${action1}" /> 
+      	<input type="button" id="multi" value="${action2}" /></td>
       </tr>
       </c:if>
     </tbody>
