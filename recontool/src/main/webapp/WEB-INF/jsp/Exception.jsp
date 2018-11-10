@@ -16,7 +16,7 @@
 	      </select>
 	      <button type="button" id="exceptionFilter" class="btn btn-info">Submit</button>
 		</div>
-	    <div class="form-group" style="padding-left: 300px">
+	    <div class="form-group">
 	    	<label for="sel1">Search:</label>
 	    	<input class="form-control warning" id="myInput" type="text" placeholder="Search..">
 	    </div>

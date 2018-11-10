@@ -4,7 +4,7 @@
 <div>
   <table class="table table-bordered table-striped">
     <thead>
-      <tr class="success">
+      <tr style="background-color: blue;color: white;">
        <c:if test="${excCategoryId != 0}">
         <th></th>
         </c:if>
@@ -21,11 +21,20 @@
     </thead>
     <tbody id="myTable">
     <c:forEach items="${exceptions}" var="exception">
-      <tr class="info">
+      <tr>
        <c:if test="${excCategoryId != 0}">
       	<td><input type="checkbox" alt="${exception.fileRowId}" id="checkBox" onclick="validateCategory('${exception.tradeid}','${exception.category}')"  name="${exception.tradeid}" /></td>
       	</c:if>
-        <td><c:out value="${exception.tradeid}"></c:out></td>
+      	<c:choose>
+		    <c:when test="${exception.comment!=null && exception.comment !=''}">
+		        <td style="background-color: green;color: white;"> 
+		        <br />
+		    </c:when>    
+		    <c:otherwise>
+		        <td> 
+		    </c:otherwise>
+		</c:choose>
+        <c:out value="${exception.tradeid}"></c:out></td>
         <td><c:out value="${exception.counterpartyName}"></c:out></td>
         <td><c:out value="${exception.status}"></c:out></td>
         <td><c:out value="${exception.attributeName}"></c:out></td>

@@ -19,26 +19,26 @@ th, td {
 </style>
 <div>
 <table class="table table-bordered table-striped">
-  <tr class="success">
+  <tr style="background: blue; color: white;">
     <th colspan="2" align="center">Recon file information</th>
   </tr>
-  <tr class="info">
+  <tr>
     <td>Name</td>
     <td><c:out value="${recon.name}"></c:out></td>
   </tr>
-  <tr class="warning">
+  <tr>
     <td>Path</td>
     <td><c:out value="${recon.information}"></c:out></td>
   </tr>
-  <tr class="info">
+  <tr>
     <td>RUN Schedule</td>
     <td><c:out value="${recon.runschedule}"></c:out></td>
   </tr>
-  <tr class="warning">
+  <tr>
     <td>Description</td>
     <td><c:out value="${recon.description}"></c:out></td>
   </tr>
-   <tr class="info">
+   <tr>
     <td>Browser file</td>
     <td>
     	<form method="POST" action="upload" enctype="multipart/form-data" >
