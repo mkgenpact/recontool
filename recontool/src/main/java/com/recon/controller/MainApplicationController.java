@@ -96,7 +96,7 @@ public class MainApplicationController {
 			next.setAttributeValue(eachModel.getValue());
 			next.setCounterpartyName(eachModel.getCounterpartyname());
 			next.setStatus(eachModel.getStatus());
-			final String excepetionCategory = eachModel.getCategory().replaceAll("\\s","");
+			final String excepetionCategory = eachModel.getSubcategory().replaceAll("\\s","");
 			for (BreakAction action : listOfActions) {
 				final String breakActionExce = action.getName().replaceAll("\\s","");
 				if (breakActionExce.equalsIgnoreCase(excepetionCategory)) {
