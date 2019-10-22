@@ -1,6 +1,6 @@
 url : http://localhost:8026/recontool/artApi/updateFoMoResponse
 request body :
-[{
+ [{
 		 "id" : "1",
 		 "actiontaken" : "Activate FO",
 		 "message" : "successfully update in FO"
