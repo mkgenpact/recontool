@@ -23,7 +23,7 @@
 <body>
 <div class="container">
 	<div class="page-header">
-		<span>ART Tool</span>
+		<span>ART Tool-(${env})</span>
 	</div>
 	<div id="logout">
 		<span class="glyphicon glyphicon-user"><a href="/recontool/logout" id="logoutMain">LogOut</a></span>

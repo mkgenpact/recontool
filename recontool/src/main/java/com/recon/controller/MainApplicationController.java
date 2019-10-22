@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,9 @@ public class MainApplicationController {
 	
 	@Autowired
 	private ReconDao reconDao;
+	
+	@Autowired
+    Environment environment;
 	
 	
 	@RequestMapping("/loadRecons")
@@ -273,6 +277,7 @@ public class MainApplicationController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	     String name = auth.getName(); //get logged in username
 	      model.addAttribute("username", "Hello "+ name);
+	      model.addAttribute("env", environment.getProperty("server.profile"));
 	      //set the recons
 	      final List<ReconModel> recons = reconDao.loadRecons();
 	      model.addAttribute("recons", recons);
