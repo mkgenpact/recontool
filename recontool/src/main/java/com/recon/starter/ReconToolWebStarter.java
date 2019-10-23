@@ -13,6 +13,6 @@ import org.springframework.context.annotation.PropertySource;
 public class ReconToolWebStarter extends SpringBootServletInitializer {
 
 	public static void main(String args[]) {
-		SpringApplication.run(ReconToolWebStarter.class, args);
+		 SpringApplication.run(ReconToolWebStarter.class, args);
 	}
 }
