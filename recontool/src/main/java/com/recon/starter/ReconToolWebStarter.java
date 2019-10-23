@@ -9,7 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 
 
 @SpringBootApplication
-@PropertySource("classpath:application-${env-source}.properties")
 @ComponentScan("com.recon")
 public class ReconToolWebStarter extends SpringBootServletInitializer {
 
